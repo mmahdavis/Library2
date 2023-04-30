@@ -26,7 +26,7 @@ const model = ref([
     {
         label: 'Special Issues',
         items: [
-            { label: 'All Special Issues', icon: 'pi pi-fw pi-file', to: '/dashboard/special_issue' },
+            { label: 'All Special Issues', icon: 'pi pi-fw pi-file', to: '/dashboard/special_issues' },
         ]
     },
 ]);

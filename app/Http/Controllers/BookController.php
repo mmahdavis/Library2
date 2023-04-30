@@ -15,11 +15,11 @@ use Inertia\Inertia;
 class BookController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the book.
      */
     public function index()
     {
-        $books = Book::with('writer', 'publisher', 'translator')->get([
+        $books = Book::with('category', 'writer', 'publisher', 'translator')->get([
             '*',
             'category_id as category',
         ]);
@@ -39,7 +39,7 @@ class BookController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created book in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      */
@@ -71,7 +71,7 @@ class BookController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified book.
      *
      * @param  \App\Models\Book $book
      */
@@ -80,23 +80,13 @@ class BookController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Book $book
-     */
-    public function edit(Book $book)
-    {
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Update the specified book in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Book $book
      */
     public function update(Request $request, Book $book)
     {
-        logger();
         try {
             $book->update([
                 'category_id' => $request->category,
@@ -125,7 +115,7 @@ class BookController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified book from storage.
      *
      * @param  \Illuminate\Http\Request  $request
      */
