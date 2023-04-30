@@ -1,7 +1,6 @@
 <script setup>
 import { FilterMatchMode } from 'primevue/api';
 import { ref, onMounted, onBeforeMount } from 'vue';
-import ProductService from '@/Services/ProductService';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useToast } from 'primevue/usetoast';
 import { Head, router } from '@inertiajs/vue3';
@@ -9,15 +8,18 @@ import axios from 'axios';
 
 const props = defineProps({
     books: Object,
+    categories: Object,
+    tags: Object,
+    writers: Object,
+    publishers: Object,
+    translators: Object,
 });
 const toast = useToast();
-
-const products = ref(null);
-const productDialog = ref(false);
-const deleteProductDialog = ref(false);
-const deleteProductsDialog = ref(false);
-const product = ref({});
-const selectedProducts = ref(null);
+const bookDialog = ref(false);
+const deleteBookDialog = ref(false);
+const deleteBooksDialog = ref(false);
+const book = ref({});
+const selectedBooks = ref(null);
 const dt = ref(null);
 const filters = ref({});
 const submitted = ref(false);
@@ -27,70 +29,29 @@ const statuses = ref([
     { label: 'OUTOFSTOCK', value: 'outofstock' }
 ]);
 
-const productService = new ProductService();
-
 onBeforeMount(() => {
     initFilters();
 });
-onMounted(() => {
-    // products.value = props.books
-    // productService.getProducts().then((data) => (products.value = data));
-    // console.log(props.books);
-    // console.log(products.value);
-});
+
 const formatCurrency = (value) => {
     return value.toLocaleString('fa-IR', { style: 'currency', currency: 'IRR' });
 };
 
-const openNew = () => {
-    product.value = {};
-    submitted.value = false;
-    productDialog.value = true;
-};
-
 const hideDialog = () => {
-    productDialog.value = false;
+    bookDialog.value = false;
     submitted.value = false;
 };
 
-const saveProduct = () => {
-    submitted.value = true;
-    if (product.value.name && product.value.name.trim() && product.value.price) {
-        if (product.value.id) {
-            product.value.inventoryStatus = product.value.inventoryStatus.value ? product.value.inventoryStatus.value : product.value.inventoryStatus;
-            props.books.value[findIndexById(product.value.id)] = product.value;
-            toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-        } else {
-            product.value.id = createId();
-            product.value.code = createId();
-            product.value.image = 'product-placeholder.svg';
-            product.value.inventoryStatus = product.value.inventoryStatus ? product.value.inventoryStatus.value : 'INSTOCK';
-            props.books.value.push(product.value);
-            toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-        }
-        productDialog.value = false;
-        product.value = {};
-    }
+const confirmDeleteBook = (editBook) => {
+    book.value = editBook;
+    deleteBookDialog.value = true;
 };
 
-const editProduct = (editProduct) => {
-    product.value = { ...editProduct };
-    console.log(product);
-    productDialog.value = true;
-};
-
-const confirmDeleteProduct = (editProduct) => {
-    product.value = editProduct;
-    deleteProductDialog.value = true;
-};
-
-const deleteProduct = (product) => {
-    console.log(product);
-    axios.delete(route('books.destroy', [product]))
+const deleteBook = (book) => {
+    axios.delete(route('books.destroy', [[book.id]]))
         .then((r) => {
-            console.log(r);
-            deleteProductDialog.value = false;
-            toast.add({ severity: 'success', summary: 'Successful ', detail: 'Product Deleted', life: 3000 });
+            deleteBookDialog.value = false;
+            toast.add({ severity: 'success', summary: 'Successful ', detail: 'Book Deleted', life: 3000 });
             router.reload();
         })
         .catch((error) => {
@@ -109,45 +70,97 @@ const findIndexById = (id) => {
     return index;
 };
 
-const createId = () => {
-    let id = '';
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 5; i++) {
-        id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
-};
-
 const exportCSV = () => {
     dt.value.exportCSV();
 };
 
 const confirmDeleteSelected = () => {
-    deleteProductsDialog.value = true;
+    deleteBooksDialog.value = true;
 };
 
-const deleteSelectedProducts = () => {
-    axios.delete(route('books.destroy', [selectedProducts.value]))
+const deleteSelectedBooks = () => {
+    const itemsId = [];
+    selectedBooks.value.forEach(element => {
+        itemsId.push(element.id);
+    });
+    axios.delete(route('books.destroy', [itemsId]))
         .then((r) => {
-            console.log(r);
-            deleteProductDialog.value = false;
-            toast.add({ severity: 'success', summary: 'Successful ', detail: 'Product Deleted', life: 3000 });
+            deleteBooksDialog.value = false;
+            toast.add({ severity: 'success', summary: 'Successful ', detail: 'Books Deleted', life: 3000 });
             router.reload();
         })
         .catch((error) => {
             toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
         })
-
-    // console.log(selectedProducts.value);
-    // selectedProducts.value.forEach(element => {
-    //     console.log(element);
-    // });
 };
 
 const initFilters = () => {
     filters.value = {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS }
     };
+};
+
+const openNew = () => {
+    book.value = {};
+    submitted.value = false;
+    bookDialog.value = true;
+};
+
+const SetBookData = () => {
+    book.value.inventoryStatus = book.value.inventoryStatus.label || book.value.inventoryStatus
+    book.value.writer = book.value.writer.id
+    book.value.publisher = book.value.publisher.id
+    book.value.translator = book.value.translator.id
+    if (book.value.tags) {
+        book.value.tag = []
+        book.value.tags.forEach(element => {
+            book.value.tag.push(element.id);
+        });
+        delete book.value.tags;
+    }
+}
+
+const saveBook = () => {
+    submitted.value = true;
+    if (book.value.name && book.value.name.trim() && book.value.price) {
+        // Update If Book Exist
+        if (book.value.id) {
+            SetBookData();
+            axios.put(route('books.update', [book.value.id, book.value]))
+                .then((r) => {
+                    console.log(r);
+                    bookDialog.value = false;
+                    book.value = {};
+                    toast.add({ severity: 'success', summary: 'Successful', detail: 'Book Created', life: 3000 });
+                    // router.reload();
+                })
+                .catch((error) => {
+                    toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
+                })
+        }
+        // Create New Book
+        else {
+            SetBookData();
+            axios.post(route('books.store', [book.value]))
+                .then((r) => {
+                    bookDialog.value = false;
+                    book.value = {};
+                    toast.add({ severity: 'success', summary: 'Successful', detail: 'Book Created', life: 3000 });
+                    router.reload();
+                })
+                .catch((error) => {
+                    toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
+                })
+
+        }
+
+
+    }
+};
+
+const editBook = (editBook) => {
+    book.value = { ...editBook };
+    bookDialog.value = true;
 };
 </script>
 
@@ -164,26 +177,26 @@ const initFilters = () => {
                                 <Button label="New" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" />
                                 <Button label="Delete" icon="pi pi-trash" class="p-button-danger"
                                     @click="confirmDeleteSelected"
-                                    :disabled="!selectedProducts || !selectedProducts.length" />
+                                    :disabled="!selectedBooks || !selectedBooks.length" />
                             </div>
                         </template>
 
                         <template v-slot:end>
-                            <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import"
-                                chooseLabel="Import" class="mr-2 inline-block" />
+                            <!-- <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import"
+                                chooseLabel="Import" class="mr-2 inline-block" /> -->
                             <Button label="Export" icon="pi pi-upload" class="p-button-help" @click="exportCSV($event)" />
                         </template>
                     </Toolbar>
 
-                    <DataTable ref="dt" :value="props.books" v-model:selection="selectedProducts" dataKey="id"
+                    <DataTable ref="dt" :value="props.books" v-model:selection="selectedBooks" dataKey="id"
                         :paginator="true" :rows="10" :filters="filters"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         :rowsPerPageOptions="[5, 10, 25]"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} books"
                         responsiveLayout="scroll">
                         <template #header>
                             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                                <h5 class="m-0">Manage Products</h5>
+                                <h5 class="m-0">Manage Books</h5>
                                 <span class="block mt-2 md:mt-0 p-input-icon-left">
                                     <i class="pi pi-search" />
                                     <InputText v-model="filters['global'].value" placeholder="Search..." />
@@ -207,7 +220,8 @@ const initFilters = () => {
                         <Column header="Image" headerStyle="width:14%; min-width:10rem;">
                             <template #body="slotProps">
                                 <span class="p-column-title">Image</span>
-                                <img :src="slotProps.data.image" :alt="slotProps.data.image" class="shadow-2" width="100" />
+                                <img :src="slotProps.data.thumbline" :alt="slotProps.data.thumbline" class="shadow-2"
+                                    width="100" />
                             </template>
                         </Column>
                         <Column field="price" header="Price" :sortable="true" headerStyle="width:14%; min-width:8rem;">
@@ -220,13 +234,13 @@ const initFilters = () => {
                             headerStyle="width:14%; min-width:10rem;">
                             <template #body="slotProps">
                                 <span class="p-column-title">Category</span>
-                                {{ slotProps.data.category }}
+                                {{ slotProps.data.category.name }}
                             </template>
                         </Column>
                         <Column field="rating" header="Reviews" :sortable="true" headerStyle="width:14%; min-width:10rem;">
                             <template #body="slotProps">
                                 <span class="p-column-title">Rating</span>
-                                <Rating :modelValue="3" :readonly="true" :cancel="false" />
+                                <Rating :modelValue="slotProps.data.like" :readonly="true" :cancel="false" />
                             </template>
                         </Column>
                         <Column field="inventoryStatus" header="Status" :sortable="true"
@@ -234,123 +248,131 @@ const initFilters = () => {
                             <template #body="slotProps">
                                 <span class="p-column-title">Status</span>
                                 <span
-                                    :class="'product-badge status-' + (slotProps.data.inventoryStatus ? slotProps.data.inventoryStatus.toLowerCase() : '')">{{
+                                    :class="'book-badge status-' + (slotProps.data.inventoryStatus ? slotProps.data.inventoryStatus.toLowerCase() : '')">{{
                                         slotProps.data.inventoryStatus }}</span>
                             </template>
                         </Column>
                         <Column headerStyle="min-width:10rem;">
                             <template #body="slotProps">
                                 <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-                                    @click="editProduct(slotProps.data)" />
+                                    @click="editBook(slotProps.data)" />
                                 <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2"
-                                    @click="confirmDeleteProduct(slotProps.data)" />
+                                    @click="confirmDeleteBook(slotProps.data)" />
                             </template>
                         </Column>
                     </DataTable>
 
-                    <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Product Details"
+                    <Dialog v-model:visible="bookDialog" :style="{ width: '450px' }" header="Book Details"
                         :modal="true" class="p-fluid">
-                        <img :src="'/demo/images/product/' + product.image" :alt="product.image" v-if="product.image"
-                            width="150" class="mt-0 mx-auto mb-5 block shadow-2" />
+                        <img :src="book.thumbline ? book.thumbline : 'https://fakeimg.pl/320x220/'"
+                            alt="book image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" />
+
                         <div class="field">
                             <label for="name">Name</label>
-                            <InputText id="name" v-model.trim="product.name" required="true" autofocus
-                                :class="{ 'p-invalid': submitted && !product.name }" />
-                            <small class="p-invalid" v-if="submitted && !product.name">Name is required.</small>
-                        </div>
-                        <div class="field">
-                            <label for="description">Description</label>
-                            <Textarea id="description" v-model="product.description" required="true" rows="3" cols="20" />
+                            <InputText id="name" v-model.trim="book.name" required="true" autofocus
+                                :class="{ 'p-invalid': submitted && !book.name }" />
+                            <small class="p-invalid" v-if="submitted && !book.name">Name is required.</small>
                         </div>
 
                         <div class="field">
                             <label for="inventoryStatus" class="mb-3">Inventory Status</label>
-                            <Dropdown id="inventoryStatus" v-model="product.inventoryStatus" :options="statuses"
-                                optionLabel="label" placeholder="Select a Status">
-                                <template #value="slotProps">
-                                    <div v-if="slotProps.value && slotProps.value.value">
-                                        <span :class="'product-badge status-' + slotProps.value.value">{{
-                                            slotProps.value.label
-                                        }}</span>
-                                    </div>
-                                    <div v-else-if="slotProps.value && !slotProps.value.value">
-                                        <span :class="'product-badge status-' + slotProps.value.toLowerCase()">{{
-                                            slotProps.value }}</span>
-                                    </div>
-                                    <span v-else>
-                                        {{ slotProps.placeholder }}
-                                    </span>
-                                </template>
-                            </Dropdown>
-                        </div>
-
-                        <div class="field">
-                            <label class="mb-3">Category</label>
-                            <div class="formgrid grid">
-                                <div class="field-radiobutton col-6">
-                                    <RadioButton id="category1" name="category" value="Accessories"
-                                        v-model="product.category" />
-                                    <label for="category1">Accessories</label>
-                                </div>
-                                <div class="field-radiobutton col-6">
-                                    <RadioButton id="category2" name="category" value="Clothing"
-                                        v-model="product.category" />
-                                    <label for="category2">Clothing</label>
-                                </div>
-                                <div class="field-radiobutton col-6">
-                                    <RadioButton id="category3" name="category" value="Electronics"
-                                        v-model="product.category" />
-                                    <label for="category3">Electronics</label>
-                                </div>
-                                <div class="field-radiobutton col-6">
-                                    <RadioButton id="category4" name="category" value="Fitness"
-                                        v-model="product.category" />
-                                    <label for="category4">Fitness</label>
-                                </div>
-                            </div>
+                            {{ book.inventoryStatus }}
+                            <Dropdown id="inventoryStatus" v-model="book.inventoryStatus" :options="statuses"
+                                optionLabel="label" placeholder="Select a Status"
+                                :class="{ 'p-invalid': submitted && !book.inventoryStatus }" />
+                            <small class="p-invalid" v-if="submitted && !book.inventoryStatus">InventoryStatus is
+                                required.</small>
                         </div>
 
                         <div class="formgrid grid">
                             <div class="field col">
                                 <label for="price">Price</label>
-                                <InputNumber id="price" v-model="product.price" mode="currency" currency="USD"
-                                    locale="en-US" :class="{ 'p-invalid': submitted && !product.price }" :required="true" />
-                                <small class="p-invalid" v-if="submitted && !product.price">Price is required.</small>
+                                <InputNumber id="price" v-model="book.price" mode="currency" currency="IRR"
+                                    locale="fa-IR" :class="{ 'p-invalid': submitted && !book.price }" :required="true" />
+                                <small class="p-invalid" v-if="submitted && !book.price">Price is required.</small>
                             </div>
                             <div class="field col">
                                 <label for="quantity">Quantity</label>
-                                <InputNumber id="quantity" v-model="product.quantity" integeronly />
+                                <InputNumber id="quantity" v-model="book.quantity" integeronly
+                                    :class="{ 'p-invalid': submitted && !book.quantity }" />
+                                <small class="p-invalid" v-if="submitted && !book.quantity">Quantity is required.</small>
                             </div>
                         </div>
+
+                        <div class="field">
+                            <label class="mb-3">Category</label>
+                            <div class="formgrid grid">
+                                <div class="field-radiobutton col-6" v-for="category in  categories ">
+                                    <RadioButton id="category1" name="category" :value="category.id"
+                                        v-model="book.category" />
+                                    <label for="category1">{{ category.name }}</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="mb-3">Tags</label>
+                            <MultiSelect v-model="book.tags" :options="tags" optionLabel="name" placeholder="Select Tags"
+                                :filter="true">
+                                <template #value="slotProps">
+                                    <div class="inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2"
+                                        v-for=" option  of  slotProps.value " :key="option.id">
+                                        <div>{{ option.name }}</div>
+                                    </div>
+                                    <template v-if="!slotProps.value || slotProps.value.length === 0">
+                                        <div class="p-1">Select Tags</div>
+                                    </template>
+                                </template>
+                            </MultiSelect>
+                        </div>
+
+                        <div class="field">
+                            <label class="mb-3">writer</label>
+                            <Dropdown v-model="book.writer" :options="writers" optionLabel="name"
+                                placeholder="Select Writer" />
+                        </div>
+
+                        <div class="field">
+                            <label class="mb-3">publisher</label>
+                            <Dropdown v-model="book.publisher" :options="publishers" optionLabel="name"
+                                placeholder="Select publisher" />
+                        </div>
+
+                        <div class="field">
+                            <label class="mb-3">translator</label>
+                            <Dropdown v-model="book.translator" :options="translators" optionLabel="name"
+                                placeholder="Select translator" />
+                        </div>
+
                         <template #footer>
                             <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
-                            <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
+                            <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveBook" />
                         </template>
                     </Dialog>
 
-                    <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm"
+                    <Dialog v-model:visible="deleteBookDialog" :style="{ width: '450px' }" header="Confirm"
                         :modal="true">
                         <div class="flex align-items-center justify-content-center">
                             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                            <span v-if="product">Are you sure you want to delete <b>{{ product.name }}</b>?</span>
+                            <span v-if="book">Are you sure you want to delete <b>{{ book.name }}</b>?</span>
                         </div>
                         <template #footer>
                             <Button label="No" icon="pi pi-times" class="p-button-text"
-                                @click="deleteProductDialog = false" />
-                            <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteProduct(product)" />
+                                @click="deleteBookDialog = false" />
+                            <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteBook(book)" />
                         </template>
                     </Dialog>
 
-                    <Dialog v-model:visible="deleteProductsDialog" :style="{ width: '450px' }" header="Confirm"
+                    <Dialog v-model:visible="deleteBooksDialog" :style="{ width: '450px' }" header="Confirm"
                         :modal="true">
                         <div class="flex align-items-center justify-content-center">
                             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                            <span v-if="product">Are you sure you want to delete the selected products?</span>
+                            <span v-if="book">Are you sure you want to delete the selected books?</span>
                         </div>
                         <template #footer>
                             <Button label="No" icon="pi pi-times" class="p-button-text"
-                                @click="deleteProductsDialog = false" />
-                            <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteSelectedProducts" />
+                                @click="deleteBooksDialog = false" />
+                            <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteSelectedBooks" />
                         </template>
                     </Dialog>
                 </div>
@@ -359,6 +381,4 @@ const initFilters = () => {
     </app-layout>
 </template>
 
-<style scoped lang="scss">
-@import '../../css//demo/styles/badges.scss';
-</style>
+<style scoped lang="scss">@import '../../css//demo/styles/badges.scss';</style>

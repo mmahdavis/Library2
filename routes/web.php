@@ -49,7 +49,7 @@ Route::middleware([
         // Update an existing Book
         Route::put('/{book}', 'update')->name('books.update');
         // Delete an Book
-        Route::delete('/{book}', 'destroy')->name('books.destroy');
+        Route::delete('', 'destroy')->name('books.destroy');
     });
 
     Route::prefix('dashboard/writers')->controller(WriterController::class)->group(function () {

@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
-            $table->foreignId('tag_id')->nullable()->constrained('tags')->nullOnDelete();
             $table->foreignId('writer_id')->nullable()->constrained('writers')->nullOnDelete();
             $table->foreignId('publisher_id')->nullable()->constrained('publishers')->nullOnDelete();
             $table->foreignId('translator_id')->nullable()->constrained('translators')->nullOnDelete();
             $table->string('code')->unique();
             $table->string('name');
             $table->integer('price')->default(0);
+            $table->string('thumbline')->default('https://fakeimg.pl/320x220/');
             $table->string('image')->default('https://fakeimg.pl/320/');
             $table->integer('like')->default(0);
             $table->integer('quantity')->default(0);

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -23,14 +24,16 @@ class Book extends Model
         'name',
         'price',
         'image',
+        'inventoryStatus',
+        'quantity'
     ];
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
-    public function tags(): HasMany
+    public function tags(): BelongsToMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->belongsToMany(Tag::class, 'tag_ralations', 'entity_id', 'tag_id');
     }
     public function writer(): BelongsTo
     {

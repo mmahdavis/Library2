@@ -24,17 +24,17 @@ class BookFactory extends Factory
     {
         return [
             'category_id' => Category::inRandomOrder()->first(),
-            'tag_id' => Tag::inRandomOrder()->first(),
             'writer_id' => Writer::inRandomOrder()->first(),
             'publisher_id' => Publisher::inRandomOrder()->first(),
             'translator_id' => Translator::inRandomOrder()->first(),
             'code' => $this->faker->unique()->ean8(),
             'name' => $this->faker->name(),
             'price' => $this->faker->randomNumber(6, true),
+            'thumbline' => 'https://fakeimg.pl/320x220/',
             'image' => 'https://fakeimg.pl/320/',
             'quantity' => $this->faker->numberBetween(0, 50),
             'inventoryStatus' => $this->faker->randomElement(['INSTOCK', 'OUTOFSTOCK', 'LOWSTOCK']),
-            'rating' => $this->faker->numberBetween(0, 5),
+            'like' => $this->faker->numberBetween(0, 5),
         ];
     }
 }

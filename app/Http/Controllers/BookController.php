@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
+use App\Models\Publisher;
+use App\Models\Tag;
+use App\Models\Tagrelations;
+use App\Models\Translator;
+use App\Models\Writer;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,29 +19,54 @@ class BookController extends Controller
      */
     public function index()
     {
-        // $books = Book::all();
-        return Inertia::render('BooksView', [
-            'books' => Book::all(),
+        $books = Book::with('writer', 'publisher', 'translator')->get([
+            '*',
+            'category_id as category',
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+        foreach ($books as $item) {
+            $item->writer->makeHidden('image', 'slug', 'created_at', 'updated_at');
+            $item->publisher->makeHidden('image', 'slug', 'created_at', 'updated_at');
+            $item->translator->makeHidden('image', 'slug', 'created_at', 'updated_at');
+        }
+        return Inertia::render('BooksView', [
+            'books' => $books,
+            'categories' =>Category::all('id', 'name'),
+            'tags' => Tag::all('id', 'name'),
+            'writers' => Writer::all('id', 'name'),
+            'publishers' => Publisher::all('id', 'name'),
+            'translators' => Translator::all('id', 'name'),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        try {
+            $book = Book::create([
+                'category_id' => $request->category,
+                'writer_id' => $request->writer,
+                'publisher_id' => $request->publisher,
+                'translator_id' => $request->translator,
+                'code' => 11223355,
+                'name' => $request->name,
+                'price' => $request->price,
+                'quantity' => $request->quantity,
+                'inventoryStatus' => $request->inventoryStatus,
+            ]);
+            foreach ($request->tag as $item) {
+                Tagrelations::create([
+                    'entity_id' => $book->id,
+                    'tag_id' => $item,
+                ]);
+            }
+            return response()->json($book, 200);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
 
     }
 
@@ -43,7 +74,6 @@ class BookController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Book $book
-     * @return \Illuminate\Http\Response
      */
     public function show(Book $book)
     {
@@ -53,7 +83,6 @@ class BookController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Book $book
-     * @return \Illuminate\Http\Response
      */
     public function edit(Book $book)
     {
@@ -64,33 +93,50 @@ class BookController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Book $book
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Book $book)
     {
+        logger();
+        try {
+            $book->update([
+                'category_id' => $request->category,
+                'writer_id' => $request->writer,
+                'publisher_id' => $request->publisher,
+                'translator_id' => $request->translator,
+                'name' => $request->name,
+                'price' => $request->price,
+                'quantity' => $request->quantity,
+                'inventoryStatus' => $request->inventoryStatus,
+            ]);
+            if($request->tag){
+                Tagrelations::where('entity_id',$book->id)->where('type','book')->delete();
+                foreach ($request->tag as $item) {
+                    Tagrelations::create([
+                        'entity_id' => $book->id,
+                        'tag_id' => $item,
+                        'type' => 'book',
+                    ]);
+                }
+            }
+            return response()->json($book, 200);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Book $book
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function destroy(Object $book)
+    public function destroy(Request $request)
     {
-        // foreach ($book as $item) {
-        //     $items = Book::find($item);
-        $item = $book[0];
-        return response()->json('item deleted ' . $item, 200);
-        // }
-        // try {
-        //     foreach ($book as $item) {
-        //         return response()->json('item deleted ' . $item, 300);
-        //     }
-        //     // $book->delete();
-        //     // return response()->json('deleted', 200);
-        // } catch (\Throwable $th) {
-        //     return response()->json($th);
-        // }
+        try {
+            $books = Book::whereIn('id', $request)->delete();
+            return response()->json('books deleted', 200);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
 
     }
 }
