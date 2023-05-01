@@ -63,6 +63,7 @@ const itemClick = (event, item) => {
 };
 
 const checkActiveRoute = (item) => {
+    return window.location.pathname === item.to;
 
 };
 </script>

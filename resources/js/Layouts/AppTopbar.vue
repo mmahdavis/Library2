@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useLayout } from '@/Layouts/composables/layout';
 import { Link } from '@inertiajs/vue3';
 
@@ -22,9 +22,6 @@ const logoUrl = computed(() => {
 
 const onTopBarMenuButton = () => {
     topbarMenuActive.value = !topbarMenuActive.value;
-};
-const onSettingsClick = () => {
-    topbarMenuActive.value = false;
 };
 const topbarMenuClasses = computed(() => {
     return {
@@ -56,13 +53,14 @@ const isOutsideClicked = (event) => {
 
     return !(sidebarEl.isSameNode(event.target) || sidebarEl.contains(event.target) || topbarEl.isSameNode(event.target) || topbarEl.contains(event.target));
 };
+
+
 </script>
 
 <template>
     <div class="layout-topbar">
         <Link href="/dashboard" class="layout-topbar-logo">
-            <img :src="logoUrl" alt="logo" />
-            <span>SAKAI</span>
+        <span>Library Admin</span>
         </Link>
 
         <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
@@ -82,11 +80,19 @@ const isOutsideClicked = (event) => {
                 <i class="pi pi-user"></i>
                 <span>Profile</span>
             </button>
-            <button @click="onSettingsClick()" class="p-link layout-topbar-button">
-                <i class="pi pi-cog"></i>
-                <span>Settings</span>
+            <button @click="$i18n.locale == 'en' ? $i18n.locale = 'fa' : $i18n.locale = 'en';"
+                class="p-link layout-topbar-button">
+                <i class="pi pi-language"></i>
+                <span>Lang</span>
             </button>
+            {{ $i18n.locale }}
         </div>
+        <!-- <div class="locale-changer">
+            <select v-model="$i18n.locale">
+                <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ locale }}
+                </option>
+            </select>
+        </div> -->
     </div>
 </template>
 

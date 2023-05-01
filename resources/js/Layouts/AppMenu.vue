@@ -29,6 +29,14 @@ const model = ref([
             { label: 'All Special Issues', icon: 'pi pi-fw pi-file', to: '/dashboard/special_issues' },
         ]
     },
+    {
+        label: 'Media',
+        items: [
+            { label: 'Images', icon: 'pi pi-fw pi-images', to: '/dashboard/images' },
+            { label: 'Audio', icon: 'pi pi-fw pi-volume-off', to: '/dashboard/audio' },
+            { label: 'PDFs', icon: 'pi pi-fw pi-file-pdf', to: '/dashboard/pdfs' },
+        ]
+    },
 ]);
 </script>
 

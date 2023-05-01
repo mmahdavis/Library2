@@ -3,7 +3,7 @@ import { FilterMatchMode } from 'primevue/api';
 import { ref, onMounted, onBeforeMount } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useToast } from 'primevue/usetoast';
-import { Head, router } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import axios from 'axios';
 
 const props = defineProps({
@@ -146,6 +146,17 @@ const editPublisher = (editPublisher) => {
             <div class="col-12">
                 <div class="card">
                     <Toast />
+                    <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
+                        <li>
+                            <Link href="/dashboard" class="text-500 no-underline line-height-3 cursor-pointer">dashboard</Link>
+                        </li>
+                        <li class="px-2">
+                            <i class="pi pi-angle-right text-500 line-height-3"></i>
+                        </li>
+                        <li>
+                            <span class="text-900 line-height-3">Publishers</span>
+                        </li>
+                    </ul>
                     <Toolbar class="mb-4">
                         <template v-slot:start>
                             <div class="my-2">
@@ -203,7 +214,7 @@ const editPublisher = (editPublisher) => {
                             <template #body="slotProps">
                                 <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
                                     @click="editPublisher(slotProps.data)" />
-                                <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2"
+                                <Button icon="pi pi-trash" class="p-button-rounded p-button-danger mt-2"
                                     @click="confirmDeletePublisher(slotProps.data)" />
                             </template>
                         </Column>
@@ -311,4 +322,4 @@ const editPublisher = (editPublisher) => {
     </app-layout>
 </template>
 
-<style scoped lang="scss">@import '../../css//demo/styles/badges.scss';</style>
+<style scoped lang="scss">@import '../../css/demo/styles/badges.scss';</style>

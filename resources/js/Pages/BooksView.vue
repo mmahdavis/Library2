@@ -3,7 +3,7 @@ import { FilterMatchMode } from 'primevue/api';
 import { ref, onMounted, onBeforeMount } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useToast } from 'primevue/usetoast';
-import { Head, router } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import axios from 'axios';
 
 const props = defineProps({
@@ -171,13 +171,23 @@ const editBook = (editBook) => {
             <div class="col-12">
                 <div class="card">
                     <Toast />
+                    <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
+                        <li>
+                            <Link href="/dashboard" class="text-500 no-underline line-height-3 cursor-pointer">dashboard</Link>
+                        </li>
+                        <li class="px-2">
+                            <i class="pi pi-angle-right text-500 line-height-3"></i>
+                        </li>
+                        <li>
+                            <span class="text-900 line-height-3">Books</span>
+                        </li>
+                    </ul>
                     <Toolbar class="mb-4">
                         <template v-slot:start>
                             <div class="my-2">
                                 <Button label="New" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" />
                                 <Button label="Delete" icon="pi pi-trash" class="p-button-danger"
-                                    @click="confirmDeleteSelected"
-                                    :disabled="!selectedBooks || !selectedBooks.length" />
+                                    @click="confirmDeleteSelected" :disabled="!selectedBooks || !selectedBooks.length" />
                             </div>
                         </template>
 
@@ -256,16 +266,16 @@ const editBook = (editBook) => {
                             <template #body="slotProps">
                                 <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
                                     @click="editBook(slotProps.data)" />
-                                <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2"
+                                <Button icon="pi pi-trash" class="p-button-rounded p-button-danger mt-2"
                                     @click="confirmDeleteBook(slotProps.data)" />
                             </template>
                         </Column>
                     </DataTable>
 
-                    <Dialog v-model:visible="bookDialog" :style="{ width: '450px' }" header="Book Details"
-                        :modal="true" class="p-fluid">
-                        <img :src="book.thumbline ? book.thumbline : 'https://fakeimg.pl/320x220/'"
-                            alt="book image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" />
+                    <Dialog v-model:visible="bookDialog" :style="{ width: '450px' }" header="Book Details" :modal="true"
+                        class="p-fluid">
+                        <img :src="book.thumbline ? book.thumbline : 'https://fakeimg.pl/320x220/'" alt="book image"
+                            width="150" class="mt-0 mx-auto mb-5 block shadow-2" />
 
                         <div class="field">
                             <label for="name">Name</label>
@@ -287,8 +297,8 @@ const editBook = (editBook) => {
                         <div class="formgrid grid">
                             <div class="field col">
                                 <label for="price">Price</label>
-                                <InputNumber id="price" v-model="book.price" mode="currency" currency="IRR"
-                                    locale="fa-IR" :class="{ 'p-invalid': submitted && !book.price }" :required="true" />
+                                <InputNumber id="price" v-model="book.price" mode="currency" currency="IRR" locale="fa-IR"
+                                    :class="{ 'p-invalid': submitted && !book.price }" :required="true" />
                                 <small class="p-invalid" v-if="submitted && !book.price">Price is required.</small>
                             </div>
                             <div class="field col">
@@ -350,21 +360,18 @@ const editBook = (editBook) => {
                         </template>
                     </Dialog>
 
-                    <Dialog v-model:visible="deleteBookDialog" :style="{ width: '450px' }" header="Confirm"
-                        :modal="true">
+                    <Dialog v-model:visible="deleteBookDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
                         <div class="flex align-items-center justify-content-center">
                             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                             <span v-if="book">Are you sure you want to delete <b>{{ book.name }}</b>?</span>
                         </div>
                         <template #footer>
-                            <Button label="No" icon="pi pi-times" class="p-button-text"
-                                @click="deleteBookDialog = false" />
+                            <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteBookDialog = false" />
                             <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteBook(book)" />
                         </template>
                     </Dialog>
 
-                    <Dialog v-model:visible="deleteBooksDialog" :style="{ width: '450px' }" header="Confirm"
-                        :modal="true">
+                    <Dialog v-model:visible="deleteBooksDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
                         <div class="flex align-items-center justify-content-center">
                             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                             <span v-if="book">Are you sure you want to delete the selected books?</span>
@@ -381,4 +388,6 @@ const editBook = (editBook) => {
     </app-layout>
 </template>
 
-<style scoped lang="scss">@import '../../css//demo/styles/badges.scss';</style>
+<style scoped lang="scss">
+@import '../../css/demo/styles/badges.scss';
+</style>

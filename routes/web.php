@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\MagazineController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\SpecialIssueController;
@@ -115,5 +116,18 @@ Route::middleware([
         Route::put('/{special_issue}', 'update')->name('special_issues.update');
         // Delete an special_issue
         Route::delete('/{special_issue}', 'destroy')->name('special_issues.destroy');
+    });
+
+    Route::prefix('dashboard/images')->controller(ImagesController::class)->group(function () {
+        // Get all images
+        Route::get('', 'index')->name('images.index');
+        // Get a single special_issue
+        Route::get('/{id}', 'show')->name('images.show');
+        // Create a new special_issue
+        Route::post('', 'store')->name('images.store');
+        // Update an existing special_issue
+        Route::put('/{special_issue}', 'update')->name('images.update');
+        // Delete an special_issue
+        Route::delete('/{special_issue}', 'destroy')->name('images.destroy');
     });
 });

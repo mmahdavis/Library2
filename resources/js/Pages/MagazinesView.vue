@@ -3,7 +3,7 @@ import { FilterMatchMode } from 'primevue/api';
 import { ref, onMounted, onBeforeMount } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useToast } from 'primevue/usetoast';
-import { Head, router } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import axios from 'axios';
 
 const props = defineProps({
@@ -18,6 +18,7 @@ const selectedMagazines = ref(null);
 const dt = ref(null);
 const filters = ref({});
 const submitted = ref(false);
+const expandedRows = ref([]);
 
 onBeforeMount(() => {
     initFilters();
@@ -49,28 +50,10 @@ const deleteMagazine = (magazine) => {
         })
 };
 
-const exportCSV = () => {
-    dt.value.exportCSV();
-};
 
-const confirmDeleteSelected = () => {
-    deleteMagazinesDialog.value = true;
-};
-
-const deleteSelectedMagazines = () => {
-    const itemsId = [];
-    selectedMagazines.value.forEach(element => {
-        itemsId.push(element.id);
-    });
-    axios.delete(route('magazines.destroy', [itemsId]))
-        .then((r) => {
-            deleteMagazinesDialog.value = false;
-            toast.add({ severity: 'success', summary: 'Successful ', detail: 'Magazines Deleted', life: 3000 });
-            router.reload();
-        })
-        .catch((error) => {
-            toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 3000 });
-        })
+const editMagazine = (editMagazine) => {
+    magazine.value = { ...editMagazine };
+    magazineDialog.value = true;
 };
 
 const initFilters = () => {
@@ -137,9 +120,12 @@ const saveMagazine = () => {
     }
 };
 
-const editMagazine = (editMagazine) => {
-    magazine.value = { ...editMagazine };
-    magazineDialog.value = true;
+const expandAll = () => {
+    expandedRows.value = props.magazines.filter((p) => p.id);
+};
+
+const collapseAll = () => {
+    expandedRows.value = null;
 };
 </script>
 
@@ -149,76 +135,99 @@ const editMagazine = (editMagazine) => {
         <div class="grid">
             <div class="col-12">
                 <div class="card">
-                    <Toast />
+                    <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
+                        <li>
+                            <Link href="/dashboard" class="text-500 no-underline line-height-3 cursor-pointer">dashboard</Link>
+                        </li>
+                        <li class="px-2">
+                            <i class="pi pi-angle-right text-500 line-height-3"></i>
+                        </li>
+                        <li>
+                            <span class="text-900 line-height-3">Magazines</span>
+                        </li>
+                    </ul>
                     <Toolbar class="mb-4">
                         <template v-slot:start>
                             <div class="my-2">
                                 <Button label="New" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" />
-                                <Button label="Delete" icon="pi pi-trash" class="p-button-danger"
-                                    @click="confirmDeleteSelected"
-                                    :disabled="!selectedMagazines || !selectedMagazines.length" />
                             </div>
-                        </template>
-
-                        <template v-slot:end>
-                            <!-- <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import"
-                                chooseLabel="Import" class="mr-2 inline-block" /> -->
-                            <Button label="Export" icon="pi pi-upload" class="p-button-help" @click="exportCSV($event)" />
                         </template>
                     </Toolbar>
-
-                    <DataTable ref="dt" :value="props.magazines" v-model:selection="selectedMagazines" dataKey="id"
-                        :paginator="true" :rows="10" :filters="filters"
-                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        :rowsPerPageOptions="[5, 10, 25]"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} magazines"
+                    <DataTable :value="magazines" v-model:expandedRows="expandedRows" dataKey="id"
                         responsiveLayout="scroll">
                         <template #header>
-                            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                                <h5 class="m-0">Manage Magazines</h5>
-                                <span class="block mt-2 md:mt-0 p-input-icon-left">
-                                    <i class="pi pi-search" />
-                                    <InputText v-model="filters['global'].value" placeholder="Search..." />
-                                </span>
+                            <div>
+                                <Button icon="pi pi-plus" label="Expand All" @click="expandAll" class="mr-2 mb-2" />
+                                <Button icon="pi pi-minus" label="Collapse All" @click="collapseAll" class="mb-2" />
                             </div>
                         </template>
-
-                        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                        <Column field="name" header="Name" :sortable="true" headerStyle="width:14%; min-width:10rem;">
+                        <Column :expander="true" headerStyle="min-width: 3rem" />
+                        <Column field="name" header="Name" :sortable="true">
                             <template #body="slotProps">
-                                <span class="p-column-title">Name</span>
                                 {{ slotProps.data.name }}
                             </template>
                         </Column>
-                        <Column header="Image" headerStyle="width:14%; min-width:10rem;">
+                        <Column header="Image">
                             <template #body="slotProps">
-                                <span class="p-column-title">Image</span>
-                                <img src="https://fakeimg.pl/320x220/" alt="https://fakeimg.pl/320x220/" class="shadow-2"
+                                <img :src="slotProps.data.thumbline" :alt="slotProps.data.thumbline" class="shadow-2"
                                     width="100" />
                             </template>
                         </Column>
-                        <Column field="price" header="Price" :sortable="true" headerStyle="width:14%; min-width:8rem;">
+                        <Column field="price" header="Price" :sortable="true">
                             <template #body="slotProps">
-                                <span class="p-column-title">Price</span>
                                 {{ formatCurrency(slotProps.data.price) }}
                             </template>
                         </Column>
-                        <Column field="slug" header="Slug" :sortable="true" headerStyle="width:14%; min-width:10rem;">
+                        <Column field="slug" header="Slug" :sortable="true">
                             <template #body="slotProps">
-                                <span class="p-column-title">Slug</span>
                                 {{ slotProps.data.slug }}
                             </template>
                         </Column>
                         <Column headerStyle="min-width:10rem;">
                             <template #body="slotProps">
-                                <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-                                    @click="editMagazine(slotProps.data)" />
-                                <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2"
+                                <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"/>
+                                <Button icon="pi pi-trash" class="p-button-rounded p-button-danger mt-2"
                                     @click="confirmDeleteMagazine(slotProps.data)" />
                             </template>
                         </Column>
+
+                        <template #expansion="slotProps">
+                            <div class="p-3">
+                                <h5>Magazines for {{ slotProps.data.name }}</h5>
+                                <DataTable :value="slotProps.data.books" responsiveLayout="scroll">
+                                    <Column field="id" header="Id" :sortable="true">
+                                        <template #body="slotProps">
+                                            {{ slotProps.data.id }}
+                                        </template>
+                                    </Column>
+                                    <Column field="name" header="Name" :sortable="true">
+                                        <template #body="slotProps">
+                                            {{ slotProps.data.name }}
+                                        </template>
+                                    </Column>
+                                    <Column field="thumbline" header="Thumbline">
+                                        <template #body="slotProps">
+                                            <img :src="slotProps.data.thumbline" :alt="slotProps.data.thumbline"
+                                                class="shadow-2" width="100" />
+                                        </template>
+                                    </Column>
+                                    <Column field="price" header="Price" :sortable="true">
+                                        <template #body="slotProps">
+                                            {{ formatCurrency(slotProps.data.price) }}
+                                        </template>
+                                    </Column>
+                                    <Column field="writer" header="Writer" :sortable="true">
+                                        <template #body="slotProps">
+                                            {{ formatCurrency(slotProps.data.writer.name) }}
+                                        </template>
+                                    </Column>
+                                </DataTable>
+                            </div>
+                        </template>
                     </DataTable>
 
+                    <!-- FIXME Change Inputs Or Convert To New Page -->
+                    <!-- Recommended New Page -->
                     <Dialog v-model:visible="magazineDialog" :style="{ width: '450px' }" header="Magazine Details"
                         :modal="true" class="p-fluid">
                         <img :src="magazine.thumbline ? magazine.thumbline : 'https://fakeimg.pl/320x220/'"
@@ -243,10 +252,27 @@ const editMagazine = (editMagazine) => {
 
                         <div class="formgrid grid">
                             <div class="field col">
+                                <label for="price">Price</label>
+                                <InputNumber id="price" v-model="magazine.price" mode="currency" currency="IRR"
+                                    locale="fa-IR" :class="{ 'p-invalid': submitted && !magazine.price }" :required="true" />
+                                <small class="p-invalid" v-if="submitted && !magazine.price">Price is required.</small>
+                            </div>
+                            <div class="field col">
                                 <label for="quantity">Quantity</label>
                                 <InputNumber id="quantity" v-model="magazine.quantity" integeronly
                                     :class="{ 'p-invalid': submitted && !magazine.quantity }" />
                                 <small class="p-invalid" v-if="submitted && !magazine.quantity">Quantity is required.</small>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="mb-3">Category</label>
+                            <div class="formgrid grid">
+                                <div class="field-radiobutton col-6" v-for="category in  categories ">
+                                    <RadioButton id="category1" name="category" :value="category.id"
+                                        v-model="magazine.category" />
+                                    <label for="category1">{{ category.name }}</label>
+                                </div>
                             </div>
                         </div>
 
@@ -267,9 +293,9 @@ const editMagazine = (editMagazine) => {
                         </div>
 
                         <div class="field">
-                            <label class="mb-3">magazine</label>
-                            <Dropdown v-model="magazine.magazine" :options="magazines" optionLabel="name"
-                                placeholder="Select Magazine" />
+                            <label class="mb-3">writer</label>
+                            <Dropdown v-model="magazine.writer" :options="writers" optionLabel="name"
+                                placeholder="Select Writer" />
                         </div>
 
                         <div class="field">
@@ -302,23 +328,12 @@ const editMagazine = (editMagazine) => {
                             <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteMagazine(magazine)" />
                         </template>
                     </Dialog>
-
-                    <Dialog v-model:visible="deleteMagazinesDialog" :style="{ width: '450px' }" header="Confirm"
-                        :modal="true">
-                        <div class="flex align-items-center justify-content-center">
-                            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                            <span v-if="magazine">Are you sure you want to delete the selected magazines?</span>
-                        </div>
-                        <template #footer>
-                            <Button label="No" icon="pi pi-times" class="p-button-text"
-                                @click="deleteMagazinesDialog = false" />
-                            <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteSelectedMagazines" />
-                        </template>
-                    </Dialog>
                 </div>
             </div>
         </div>
     </app-layout>
 </template>
 
-<style scoped lang="scss">@import '../../css//demo/styles/badges.scss';</style>
+<style scoped lang="scss">
+@import '../../css/demo/styles/badges.scss';
+</style>

@@ -27,6 +27,8 @@ return new class extends Migration
             $table->enum('inventoryStatus', ['INSTOCK', 'LOWSTOCK', 'OUTOFSTOCK'])->default('OUTOFSTOCK');
             $table->integer('rating')->default(0);
             $table->enum('language', ['persain', 'english', 'arabic'])->nullable()->default('persain');
+            $table->string('voice')->nullable();
+            $table->string('file')->nullable();
             $table->string('ISBN')->nullable();
             $table->string('subject')->nullable();
             $table->string('skin')->nullable();

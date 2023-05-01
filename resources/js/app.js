@@ -107,6 +107,10 @@ import CodeHighlight from '@/components/CodeHighlight.vue';
 import BlockViewer from '@/components/BlockViewer.vue';
 
 import '../css/styles.scss';
+import "primeflex/primeflex.css";
+
+import i18n from './locale.js'
+
 
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
@@ -122,6 +126,7 @@ createInertiaApp({
             .use(ToastService)
             .use(DialogService)
             .use(ConfirmationService)
+            .use(i18n)
 
             .directive('tooltip', Tooltip)
             .directive('badge', BadgeDirective)

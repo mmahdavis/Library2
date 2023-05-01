@@ -13,7 +13,7 @@ class MagazineController extends Controller
      */
     public function index()
     {
-        $magazines = Magazine::all();
+        $magazines = Magazine::with('books', 'books.writer')->get();
         return Inertia::render('MagazinesView', [
             'magazines' => $magazines,
         ]);

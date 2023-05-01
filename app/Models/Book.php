@@ -25,7 +25,9 @@ class Book extends Model
         'price',
         'image',
         'inventoryStatus',
-        'quantity'
+        'quantity',
+        'voice',
+        'file',
     ];
     public function category(): BelongsTo
     {
@@ -34,6 +36,10 @@ class Book extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'tag_ralations', 'entity_id', 'tag_id');
+    }
+    public function magazines(): BelongsToMany
+    {
+        return $this->belongsToMany(Magazine::class, 'magazine_books', 'book_id', 'magazine_id');
     }
     public function writer(): BelongsTo
     {
