@@ -6,7 +6,7 @@ import AppMenuItem from './AppMenuItem.vue';
 const enMenuList = ref([
     {
         label: 'Home',
-        items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/dashboard/' }]
+        items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/dashboard' }]
     },
     {
         label: 'Books',
@@ -42,7 +42,7 @@ const enMenuList = ref([
 const faMenuList = ref([
     {
         label: 'خانه',
-        items: [{ label: 'داشبورد', icon: 'pi pi-fw pi-home', to: '/dashboard/' }]
+        items: [{ label: 'داشبورد', icon: 'pi pi-fw pi-home', to: '/dashboard' }]
     },
     {
         label: 'کتاب ها',
