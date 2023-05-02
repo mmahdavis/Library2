@@ -154,7 +154,7 @@ const collapseAll = () => {
                         </template>
                     </Toolbar>
                     <DataTable :value="magazines" v-model:expandedRows="expandedRows" dataKey="id"
-                        responsiveLayout="scroll">
+                        responsiveLayout="scroll" :paginator="true" :rows="10">
                         <template #header>
                             <div>
                                 <Button icon="pi pi-plus" label="Expand All" @click="expandAll" class="mr-2 mb-2" />

@@ -3,6 +3,7 @@ import { onMounted, reactive, ref, watch } from 'vue';
 import ProductService from '@/Services/ProductService';
 import { useLayout } from '@/Layouts/composables/layout';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { Head } from '@inertiajs/vue3';
 
 const { isDarkTheme } = useLayout();
 
@@ -116,6 +117,7 @@ watch(
 </script>
 
 <template>
+    <Head title="Dashboard" />
     <app-layout>
         <div class="grid">
             <div class="col-12 lg:col-6 xl:col-3">
