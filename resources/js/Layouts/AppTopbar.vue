@@ -2,6 +2,9 @@
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useLayout } from '@/Layouts/composables/layout';
 import { Link } from '@inertiajs/vue3';
+import { useI18n } from "vue-i18n";
+
+const { t, locale } = useI18n();
 
 const { layoutConfig, onMenuToggle } = useLayout();
 
@@ -57,6 +60,15 @@ const isOutsideClicked = (event) => {
     return !(sidebarEl.isSameNode(event.target) || sidebarEl.contains(event.target) || topbarEl.isSameNode(event.target) || topbarEl.contains(event.target));
 };
 
+const changeLanguage = () => {
+    if (locale.value == 'en') {
+        localStorage.setItem("language", 'fa');
+        locale.value = 'fa';
+    } else {
+        localStorage.setItem("language", 'en');
+        locale.value = 'en';
+    }
+}
 
 </script>
 
@@ -83,7 +95,7 @@ const isOutsideClicked = (event) => {
                 <i class="pi pi-user"></i>
                 <span>{{ $t('appTopBar.profile') }}</span>
             </button>
-            <button @click="$i18n.locale == 'en' ? $i18n.locale = 'fa' : $i18n.locale = 'en';"
+            <button @click="changeLanguage()"
                 class="p-link layout-topbar-button">
                 <i class="pi pi-language"></i>
                 <span>{{ $t('appTopBar.language') }}</span>

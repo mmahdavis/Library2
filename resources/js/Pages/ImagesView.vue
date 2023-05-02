@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
     imagesUrl: Object,
@@ -12,11 +13,12 @@ const deleteImage = (image) => {
 </script>
 
 <template>
+    <Head title="Gallery" />
     <app-layout>
         <div class="grid">
             <div class="col-12">
                 <div class="card">
-                    <h5>DataView</h5>
+                    <h5>Image Gallery</h5>
                     <DataView :value="imagesUrl" layout="grid" :paginator="true" :rows="12">
 
                         <template #grid="slotProps">

@@ -157,7 +157,7 @@ const editBook = (editBook) => {
 </script>
 
 <template>
-    <Head title="Table" />
+    <Head title="Books" />
     <app-layout>
         <div class="grid">
             <div class="col-12">

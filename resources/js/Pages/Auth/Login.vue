@@ -2,7 +2,7 @@
 import { useLayout } from '@/Layouts/composables/layout';
 import { ref, computed } from 'vue';
 import AppConfig from '@/Layouts/AppConfig.vue';
-import { useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 
 const { layoutConfig } = useLayout();
 const email = ref('');
@@ -31,6 +31,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Login" />
     <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
         <div class="flex flex-column align-items-center justify-content-center">
             <img :src="logoUrl" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0" />
