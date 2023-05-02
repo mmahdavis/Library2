@@ -749,3 +749,372 @@
 )  
 [2023-05-01 12:28:44] local.DEBUG: https://uc202a3c6eeb20dc4f532b88c84d.dl.dropboxusercontent.com/cd/0/get/B7PVLrFBkCE3EErLH3CX1LsvMJei2n-P4B0suuHVj3oRY3h447faffs9qsKSDQxzhbPEWA_-rTuLYfGz9YgliDmRvzTqqh1Jsn5pzdsrX6hZzCcYH7KeDKSpayXeeUA9-_LDllt7XGOpbGKnckQdx_2q57NhDMky-ovC572rShyPt9YS1wfjxwHX_386ZBP4yT4/file  
 [2023-05-01 12:29:40] local.DEBUG: https://uc76165eb4c2dad5054276beb59b.dl.dropboxusercontent.com/cd/0/get/B7ON3p35ULXZPCpW8upWhMq3zYVqZXLRXBgP7g5lwu5LqnX6Rc8JZmOwA04HC7cergVo_3t5B0rdQPq6afhMzaIBV8rNPBpO0Fs95kdilzoniwiIfhFbWVgiLVV8YqMKQ0VYSzTkEh6Z4MP0YTNbphAbJ05j2HgJJL_-Vxar41j6BAFTSfm2IHpJXf37110jx3Y/file  
+[2023-05-02 04:55:12] local.ERROR: Unable to list contents for 'images', deep listing
+
+Reason: Client error: `POST https://api.dropboxapi.com/2/files/list_folder` resulted in a `401 Unauthorized` response:
+{"error":{".tag":"expired_access_token"},"error_summary":"expired_access_token/"}
+ {"userId":1,"exception":"[object] (League\\Flysystem\\UnableToListContents(code: 0): Unable to list contents for 'images', deep listing
+
+Reason: Client error: `POST https://api.dropboxapi.com/2/files/list_folder` resulted in a `401 Unauthorized` response:
+{\"error\":{\".tag\":\"expired_access_token\"},\"error_summary\":\"expired_access_token/\"}
+ at C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\league\\flysystem\\src\\UnableToListContents.php:17)
+[stacktrace]
+#0 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\league\\flysystem\\src\\Filesystem.php(116): League\\Flysystem\\UnableToListContents::atLocation('images', true, Object(GuzzleHttp\\Exception\\ClientException))
+#1 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\league\\flysystem\\src\\DirectoryListing.php(31): League\\Flysystem\\Filesystem->pipeListing('images', true, Object(Generator))
+#2 [internal function]: League\\Flysystem\\DirectoryListing::League\\Flysystem\\{closure}(Object(Generator))
+#3 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\league\\flysystem\\src\\DirectoryListing.php(87): iterator_to_array(Object(Generator), false)
+#4 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\league\\flysystem\\src\\DirectoryListing.php(62): League\\Flysystem\\DirectoryListing->toArray()
+#5 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemAdapter.php(819): League\\Flysystem\\DirectoryListing->sortByPath()
+#6 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemAdapter.php(834): Illuminate\\Filesystem\\FilesystemAdapter->files('images', true)
+#7 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\app\\Http\\Controllers\\ImagesController.php(16): Illuminate\\Filesystem\\FilesystemAdapter->allFiles('images')
+#8 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): App\\Http\\Controllers\\ImagesController->index()
+#9 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(43): Illuminate\\Routing\\Controller->callAction('index', Array)
+#10 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(259): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\ImagesController), 'index')
+#11 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#12 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(798): Illuminate\\Routing\\Route->run()
+#13 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#14 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified.php(41): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#15 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#16 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#17 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#18 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\inertiajs\\inertia-laravel\\src\\Middleware.php(87): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#19 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Inertia\\Middleware->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#20 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\jetstream\\src\\Http\\Middleware\\ShareInertiaData.php(68): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#21 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Laravel\\Jetstream\\Http\\Middleware\\ShareInertiaData->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#22 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\AuthenticateSession.php(60): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#25 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\AuthenticateSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\Authenticate.php(57): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'sanctum')
+#28 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#30 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#31 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#32 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#33 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#34 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#37 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#38 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#39 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#40 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#41 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#42 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#43 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#44 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(200): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#45 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#46 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\barryvdh\\laravel-debugbar\\src\\Middleware\\InjectDebugbar.php(66): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#47 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Barryvdh\\Debugbar\\Middleware\\InjectDebugbar->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#48 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#49 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#51 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#52 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#53 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#57 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#58 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#59 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#60 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#61 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#62 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#63 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(175): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#64 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#65 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\public\\index.php(51): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#66 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\Users\\\\ADL\\\\De...')
+#67 {main}
+
+[previous exception] [object] (GuzzleHttp\\Exception\\ClientException(code: 401): Client error: `POST https://api.dropboxapi.com/2/files/list_folder` resulted in a `401 Unauthorized` response:
+{\"error\":{\".tag\":\"expired_access_token\"},\"error_summary\":\"expired_access_token/\"}
+ at C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\guzzle\\src\\Exception\\RequestException.php:113)
+[stacktrace]
+#0 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\guzzle\\src\\Middleware.php(69): GuzzleHttp\\Exception\\RequestException::create(Object(GuzzleHttp\\Psr7\\Request), Object(GuzzleHttp\\Psr7\\Response), NULL, Array, Object(GuzzleHttp\\BodySummarizer))
+#1 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\promises\\src\\Promise.php(204): GuzzleHttp\\Middleware::GuzzleHttp\\{closure}(Object(GuzzleHttp\\Psr7\\Response))
+#2 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\promises\\src\\Promise.php(153): GuzzleHttp\\Promise\\Promise::callHandler(1, Object(GuzzleHttp\\Psr7\\Response), NULL)
+#3 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\promises\\src\\TaskQueue.php(48): GuzzleHttp\\Promise\\Promise::GuzzleHttp\\Promise\\{closure}()
+#4 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\promises\\src\\Promise.php(248): GuzzleHttp\\Promise\\TaskQueue->run(true)
+#5 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\promises\\src\\Promise.php(224): GuzzleHttp\\Promise\\Promise->invokeWaitFn()
+#6 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\promises\\src\\Promise.php(269): GuzzleHttp\\Promise\\Promise->waitIfPending()
+#7 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\promises\\src\\Promise.php(226): GuzzleHttp\\Promise\\Promise->invokeWaitList()
+#8 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\promises\\src\\Promise.php(62): GuzzleHttp\\Promise\\Promise->waitIfPending()
+#9 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\guzzle\\src\\Client.php(187): GuzzleHttp\\Promise\\Promise->wait()
+#10 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\guzzlehttp\\guzzle\\src\\ClientTrait.php(95): GuzzleHttp\\Client->request('POST', 'https://api.dro...', Array)
+#11 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\spatie\\dropbox-api\\src\\Client.php(664): GuzzleHttp\\Client->post('https://api.dro...', Array)
+#12 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\spatie\\dropbox-api\\src\\Client.php(321): Spatie\\Dropbox\\Client->rpcEndpointRequest('files/list_fold...', Array)
+#13 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\spatie\\flysystem-dropbox\\src\\DropboxAdapter.php(295): Spatie\\Dropbox\\Client->listFolder('/images', true)
+#14 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\spatie\\flysystem-dropbox\\src\\DropboxAdapter.php(278): Spatie\\FlysystemDropbox\\DropboxAdapter->iterateFolderContents('images', true)
+#15 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\league\\flysystem\\src\\Filesystem.php(112): Spatie\\FlysystemDropbox\\DropboxAdapter->listContents('images', true)
+#16 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\league\\flysystem\\src\\DirectoryListing.php(31): League\\Flysystem\\Filesystem->pipeListing('images', true, Object(Generator))
+#17 [internal function]: League\\Flysystem\\DirectoryListing::League\\Flysystem\\{closure}(Object(Generator))
+#18 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\league\\flysystem\\src\\DirectoryListing.php(87): iterator_to_array(Object(Generator), false)
+#19 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\league\\flysystem\\src\\DirectoryListing.php(62): League\\Flysystem\\DirectoryListing->toArray()
+#20 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemAdapter.php(819): League\\Flysystem\\DirectoryListing->sortByPath()
+#21 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\FilesystemAdapter.php(834): Illuminate\\Filesystem\\FilesystemAdapter->files('images', true)
+#22 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\app\\Http\\Controllers\\ImagesController.php(16): Illuminate\\Filesystem\\FilesystemAdapter->allFiles('images')
+#23 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): App\\Http\\Controllers\\ImagesController->index()
+#24 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(43): Illuminate\\Routing\\Controller->callAction('index', Array)
+#25 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(259): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\ImagesController), 'index')
+#26 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#27 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(798): Illuminate\\Routing\\Route->run()
+#28 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified.php(41): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#30 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#33 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\inertiajs\\inertia-laravel\\src\\Middleware.php(87): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#34 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Inertia\\Middleware->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\jetstream\\src\\Http\\Middleware\\ShareInertiaData.php(68): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Laravel\\Jetstream\\Http\\Middleware\\ShareInertiaData->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#37 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#38 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#39 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\AuthenticateSession.php(60): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#40 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\AuthenticateSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#41 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\Authenticate.php(57): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#42 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'sanctum')
+#43 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#44 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#46 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#49 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#56 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#57 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#58 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#59 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(200): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#60 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#61 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\barryvdh\\laravel-debugbar\\src\\Middleware\\InjectDebugbar.php(66): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#62 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Barryvdh\\Debugbar\\Middleware\\InjectDebugbar->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#63 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#64 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#65 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#66 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#67 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#68 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#69 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#70 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#71 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#72 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#73 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#74 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#75 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#76 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#77 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#78 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(175): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#79 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#80 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\public\\index.php(51): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#81 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\Users\\\\ADL\\\\De...')
+#82 {main}
+"} 
+[2023-05-02 05:01:37] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\app\\Http\\Controllers\\ImagesController.php:21)
+[stacktrace]
+#0 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\composer\\ClassLoader.php(433): Composer\\Autoload\\{closure}('C:\\\\Users\\\\ADL\\\\De...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Http\\\\Contro...')
+#2 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(1092): is_a('App\\\\Http\\\\Contro...', 'Illuminate\\\\Rout...', true)
+#3 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(1031): Illuminate\\Routing\\Route->controllerMiddleware()
+#4 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(810): Illuminate\\Routing\\Route->gatherMiddleware()
+#5 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(792): Illuminate\\Routing\\Router->gatherRouteMiddleware(Object(Illuminate\\Routing\\Route))
+#6 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#7 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#8 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#9 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(200): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#10 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#11 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\barryvdh\\laravel-debugbar\\src\\Middleware\\InjectDebugbar.php(66): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#12 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Barryvdh\\Debugbar\\Middleware\\InjectDebugbar->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#13 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#14 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#15 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#16 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#17 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#18 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#19 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#20 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#21 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#23 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#25 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#27 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#28 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(175): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#29 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#30 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\public\\index.php(51): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#31 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\Users\\\\ADL\\\\De...')
+#32 {main}
+"} 
+[2023-05-02 05:01:37] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\app\\Http\\Controllers\\ImagesController.php:21)
+[stacktrace]
+#0 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\composer\\ClassLoader.php(433): Composer\\Autoload\\{closure}('C:\\\\Users\\\\ADL\\\\De...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Http\\\\Contro...')
+#2 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\barryvdh\\laravel-debugbar\\src\\DataCollector\\RouteCollector.php(93): class_exists('App\\\\Http\\\\Contro...')
+#3 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\barryvdh\\laravel-debugbar\\src\\DataCollector\\RouteCollector.php(63): Barryvdh\\Debugbar\\DataCollector\\RouteCollector->getRouteInformation(Object(Illuminate\\Routing\\Route))
+#4 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\barryvdh\\laravel-debugbar\\src\\LaravelDebugbar.php(872): Barryvdh\\Debugbar\\DataCollector\\RouteCollector->collect()
+#5 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\maximebf\\debugbar\\src\\DebugBar\\DebugBar.php(265): Barryvdh\\Debugbar\\LaravelDebugbar->collect()
+#6 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\maximebf\\debugbar\\src\\DebugBar\\JavascriptRenderer.php(1045): DebugBar\\DebugBar->getData()
+#7 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\barryvdh\\laravel-debugbar\\src\\LaravelDebugbar.php(912): DebugBar\\JavascriptRenderer->render()
+#8 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\barryvdh\\laravel-debugbar\\src\\LaravelDebugbar.php(793): Barryvdh\\Debugbar\\LaravelDebugbar->injectDebugbar(Object(Illuminate\\Http\\Response))
+#9 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\barryvdh\\laravel-debugbar\\src\\Middleware\\InjectDebugbar.php(72): Barryvdh\\Debugbar\\LaravelDebugbar->modifyResponse(Object(Illuminate\\Http\\Request), Object(Illuminate\\Http\\Response))
+#10 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Barryvdh\\Debugbar\\Middleware\\InjectDebugbar->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#11 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#12 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#13 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#14 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#15 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#16 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#17 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#19 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#20 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#21 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#23 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#25 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(175): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#27 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#28 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\public\\index.php(51): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#29 C:\\Users\\ADL\\Desktop\\laravel\\sakaiLibrary\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\Users\\\\ADL\\\\De...')
+#30 {main}
+"} 
+[2023-05-02 05:01:42] local.DEBUG: array (
+  0 => '/storage/images/10.jpg',
+  1 => '/storage/images/11.jpg',
+  2 => '/storage/images/12.jpg',
+  3 => '/storage/images/13.jpg',
+  4 => '/storage/images/14.jpg',
+  5 => '/storage/images/15.jpg',
+  6 => '/storage/images/16.jpg',
+  7 => '/storage/images/17.jpg',
+  8 => '/storage/images/18.jpg',
+  9 => '/storage/images/19.jpg',
+  10 => '/storage/images/20.jpg',
+  11 => '/storage/images/21.jpg',
+  12 => '/storage/images/22.jpg',
+  13 => '/storage/images/4.jpg',
+  14 => '/storage/images/5.jpg',
+  15 => '/storage/images/6.jpg',
+  16 => '/storage/images/7.jpg',
+  17 => '/storage/images/8.jpg',
+  18 => '/storage/images/9.jpg',
+)  
+[2023-05-02 05:02:49] local.DEBUG: array (
+  0 => '/storage/images/10.jpg',
+  1 => '/storage/images/11.jpg',
+  2 => '/storage/images/12.jpg',
+  3 => '/storage/images/13.jpg',
+  4 => '/storage/images/14.jpg',
+  5 => '/storage/images/15.jpg',
+  6 => '/storage/images/16.jpg',
+  7 => '/storage/images/17.jpg',
+  8 => '/storage/images/18.jpg',
+  9 => '/storage/images/19.jpg',
+  10 => '/storage/images/20.jpg',
+  11 => '/storage/images/21.jpg',
+  12 => '/storage/images/22.jpg',
+  13 => '/storage/images/4.jpg',
+  14 => '/storage/images/5.jpg',
+  15 => '/storage/images/6.jpg',
+  16 => '/storage/images/7.jpg',
+  17 => '/storage/images/8.jpg',
+  18 => '/storage/images/9.jpg',
+)  
+[2023-05-02 05:02:49] local.DEBUG: array (
+  0 => '/storage/images/10.jpg',
+  1 => '/storage/images/11.jpg',
+  2 => '/storage/images/12.jpg',
+  3 => '/storage/images/13.jpg',
+  4 => '/storage/images/14.jpg',
+  5 => '/storage/images/15.jpg',
+  6 => '/storage/images/16.jpg',
+  7 => '/storage/images/17.jpg',
+  8 => '/storage/images/18.jpg',
+  9 => '/storage/images/19.jpg',
+  10 => '/storage/images/20.jpg',
+  11 => '/storage/images/21.jpg',
+  12 => '/storage/images/22.jpg',
+  13 => '/storage/images/4.jpg',
+  14 => '/storage/images/5.jpg',
+  15 => '/storage/images/6.jpg',
+  16 => '/storage/images/7.jpg',
+  17 => '/storage/images/8.jpg',
+  18 => '/storage/images/9.jpg',
+)  
+[2023-05-02 05:02:55] local.DEBUG: array (
+  0 => '/storage/images/10.jpg',
+  1 => '/storage/images/11.jpg',
+  2 => '/storage/images/12.jpg',
+  3 => '/storage/images/13.jpg',
+  4 => '/storage/images/14.jpg',
+  5 => '/storage/images/15.jpg',
+  6 => '/storage/images/16.jpg',
+  7 => '/storage/images/17.jpg',
+  8 => '/storage/images/18.jpg',
+  9 => '/storage/images/19.jpg',
+  10 => '/storage/images/20.jpg',
+  11 => '/storage/images/21.jpg',
+  12 => '/storage/images/22.jpg',
+  13 => '/storage/images/4.jpg',
+  14 => '/storage/images/5.jpg',
+  15 => '/storage/images/6.jpg',
+  16 => '/storage/images/7.jpg',
+  17 => '/storage/images/8.jpg',
+  18 => '/storage/images/9.jpg',
+)  
+[2023-05-02 05:48:46] local.DEBUG: array (
+  0 => '/storage/audios/COY_Charm1_Vocal_70bpm_Bm.wav',
+  1 => '/storage/audios/COY_Charm2_Vocal_70bpm_Bm.wav',
+  2 => '/storage/audios/COY_Emphasize_Wobble_Vocal_105bpm_G.wav',
+  3 => '/storage/audios/COY_Halcyon_vocals_70bpm_Bm.wav',
+  4 => '/storage/audios/COY_Knots_Vocal_105bpm_G.wav',
+  5 => '/storage/audios/COY_Repeater_Vocal_105bpm_G.wav',
+  6 => '/storage/audios/SavesVocalLoop-8Bar_keyEbmin_126bpm.wav',
+  7 => '/storage/audios/Vox Lay Down.wav',
+  8 => '/storage/audios/Vox_DirtySample_E-D.wav',
+  9 => '/storage/audios/loop18_keyFmin_130bpm.wav',
+)  
+[2023-05-02 05:55:21] local.DEBUG: array (
+  0 => 'audios/COY_Charm1_Vocal_70bpm_Bm.wav',
+  1 => 'audios/COY_Charm2_Vocal_70bpm_Bm.wav',
+  2 => 'audios/COY_Emphasize_Wobble_Vocal_105bpm_G.wav',
+  3 => 'audios/COY_Halcyon_vocals_70bpm_Bm.wav',
+  4 => 'audios/COY_Knots_Vocal_105bpm_G.wav',
+  5 => 'audios/COY_Repeater_Vocal_105bpm_G.wav',
+  6 => 'audios/SavesVocalLoop-8Bar_keyEbmin_126bpm.wav',
+  7 => 'audios/Vox Lay Down.wav',
+  8 => 'audios/Vox_DirtySample_E-D.wav',
+  9 => 'audios/loop18_keyFmin_130bpm.wav',
+)  
+[2023-05-02 05:55:39] local.DEBUG: array (
+  0 => 'audios/COY_Charm1_Vocal_70bpm_Bm.wav',
+  1 => 'audios/COY_Charm2_Vocal_70bpm_Bm.wav',
+  2 => 'audios/COY_Emphasize_Wobble_Vocal_105bpm_G.wav',
+  3 => 'audios/COY_Halcyon_vocals_70bpm_Bm.wav',
+  4 => 'audios/COY_Knots_Vocal_105bpm_G.wav',
+  5 => 'audios/COY_Repeater_Vocal_105bpm_G.wav',
+  6 => 'audios/SavesVocalLoop-8Bar_keyEbmin_126bpm.wav',
+  7 => 'audios/Vox Lay Down.wav',
+  8 => 'audios/Vox_DirtySample_E-D.wav',
+  9 => 'audios/loop18_keyFmin_130bpm.wav',
+)  
+[2023-05-02 05:55:39] local.DEBUG: array (
+  0 => '/storage/audios/COY_Charm1_Vocal_70bpm_Bm.wav',
+  1 => '/storage/audios/COY_Charm2_Vocal_70bpm_Bm.wav',
+  2 => '/storage/audios/COY_Emphasize_Wobble_Vocal_105bpm_G.wav',
+  3 => '/storage/audios/COY_Halcyon_vocals_70bpm_Bm.wav',
+  4 => '/storage/audios/COY_Knots_Vocal_105bpm_G.wav',
+  5 => '/storage/audios/COY_Repeater_Vocal_105bpm_G.wav',
+  6 => '/storage/audios/SavesVocalLoop-8Bar_keyEbmin_126bpm.wav',
+  7 => '/storage/audios/Vox Lay Down.wav',
+  8 => '/storage/audios/Vox_DirtySample_E-D.wav',
+  9 => '/storage/audios/loop18_keyFmin_130bpm.wav',
+)  

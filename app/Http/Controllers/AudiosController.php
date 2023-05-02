@@ -3,22 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
-class ImagesController extends Controller
+class AudiosController extends Controller
 {
     /**
      * Display a listing of the image.
      */
     public function index()
     {
-        $images = Storage::disk('local')->allFiles('public/images');
-        foreach ($images as $key => $value) {
-            $imagesUrl[$key] = Storage::url($value);
+        $audios = Storage::disk('local')->allFiles('public/audios');
+        foreach ($audios as $key => $value) {
+            $audiosUrl[$key] = Storage::url($value);
         }
-        return Inertia::render('ImagesView', [
-            'imagesUrl' => $imagesUrl,
+
+        return Inertia::render('AudiosView', [
+            'audiosUrl' => $audiosUrl,
         ]);
     }
 

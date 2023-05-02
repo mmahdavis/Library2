@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AudiosController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\MagazineController;
@@ -121,13 +122,26 @@ Route::middleware([
     Route::prefix('dashboard/images')->controller(ImagesController::class)->group(function () {
         // Get all images
         Route::get('', 'index')->name('images.index');
-        // Get a single special_issue
+        // Get a single image
         Route::get('/{id}', 'show')->name('images.show');
-        // Create a new special_issue
+        // Create a new image
         Route::post('', 'store')->name('images.store');
-        // Update an existing special_issue
-        Route::put('/{special_issue}', 'update')->name('images.update');
-        // Delete an special_issue
-        Route::delete('/{special_issue}', 'destroy')->name('images.destroy');
+        // Update an existing image
+        Route::put('/{image}', 'update')->name('images.update');
+        // Delete an image
+        Route::delete('/{image}', 'destroy')->name('images.destroy');
+    });
+
+    Route::prefix('dashboard/audios')->controller(AudiosController::class)->group(function () {
+        // Get all audios
+        Route::get('', 'index')->name('audios.index');
+        // Get a single audio
+        Route::get('/{id}', 'show')->name('audios.show');
+        // Create a new audio
+        Route::post('', 'store')->name('audios.store');
+        // Update an existing audio
+        Route::put('/{audio}', 'update')->name('audios.update');
+        // Delete an audio
+        Route::delete('/{audio}', 'destroy')->name('audios.destroy');
     });
 });

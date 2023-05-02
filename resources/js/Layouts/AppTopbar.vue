@@ -23,6 +23,7 @@ const logoUrl = computed(() => {
 const onTopBarMenuButton = () => {
     topbarMenuActive.value = !topbarMenuActive.value;
 };
+
 const topbarMenuClasses = computed(() => {
     return {
         'layout-topbar-menu-mobile-active': topbarMenuActive.value
@@ -39,12 +40,14 @@ const bindOutsideClickListener = () => {
         document.addEventListener('click', outsideClickListener.value);
     }
 };
+
 const unbindOutsideClickListener = () => {
     if (outsideClickListener.value) {
         document.removeEventListener('click', outsideClickListener);
         outsideClickListener.value = null;
     }
 };
+
 const isOutsideClicked = (event) => {
     if (!topbarMenuActive.value) return;
 
@@ -60,7 +63,7 @@ const isOutsideClicked = (event) => {
 <template>
     <div class="layout-topbar">
         <Link href="/dashboard" class="layout-topbar-logo">
-        <span>Library Admin</span>
+        <span>{{ $t('appTopBar.siteName') }}</span>
         </Link>
 
         <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
@@ -74,25 +77,18 @@ const isOutsideClicked = (event) => {
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
             <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
                 <i class="pi pi-calendar"></i>
-                <span>Calendar</span>
+                <span>{{ $t('appTopBar.calendar') }}</span>
             </button>
             <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
                 <i class="pi pi-user"></i>
-                <span>Profile</span>
+                <span>{{ $t('appTopBar.profile') }}</span>
             </button>
             <button @click="$i18n.locale == 'en' ? $i18n.locale = 'fa' : $i18n.locale = 'en';"
                 class="p-link layout-topbar-button">
                 <i class="pi pi-language"></i>
-                <span>Lang</span>
+                <span>{{ $t('appTopBar.language') }}</span>
             </button>
-            {{ $i18n.locale }}
         </div>
-        <!-- <div class="locale-changer">
-            <select v-model="$i18n.locale">
-                <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ locale }}
-                </option>
-            </select>
-        </div> -->
     </div>
 </template>
 
