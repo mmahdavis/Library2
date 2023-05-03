@@ -2,7 +2,7 @@
 import { useLayout } from '@/Layouts/composables/layout';
 import { ref, computed } from 'vue';
 import AppConfig from '@/Layouts/AppConfig.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const { layoutConfig } = useLayout();
 const email = ref('');
@@ -10,7 +10,7 @@ const password = ref('');
 const checked = ref(false);
 
 const logoUrl = computed(() => {
-    return `/layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
+    return `/layout/images/logo.png`;
 });
 
 const form = useForm({
@@ -34,14 +34,13 @@ const submit = () => {
     <Head title="Login" />
     <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
         <div class="flex flex-column align-items-center justify-content-center">
-            <img :src="logoUrl" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0" />
             <div
                 style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
                 <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
                     <div class="text-center mb-5">
-                        <img src="/demo/images/login/avatar.png" alt="Image" height="50" class="mb-3" />
-                        <div class="text-900 text-3xl font-medium mb-3">Welcome, Isabel!</div>
-                        <span class="text-600 font-medium">Sign in to continue</span>
+                        <img :src="logoUrl" alt="Image" height="50" class="mb-3" />
+                        <div class="text-900 text-3xl font-medium mb-3">Welcome</div>
+                        <span class="text-600 font-medium">Please Sign in to continue</span>
                     </div>
 
                     <form @submit.prevent="submit">
@@ -52,7 +51,8 @@ const submit = () => {
 
                             <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
                             <Password id="password" v-model="form.password" placeholder="Password" :toggleMask="true"
-                                class="w-full mb-3" inputClass="w-full" inputStyle="padding:1rem"></Password>
+                                class="w-full mb-3" inputClass="w-full" inputStyle="padding:1rem" :feedback="false">
+                            </Password>
 
                             <div class="flex align-items-center justify-content-between mb-5 gap-5">
                                 <div class="flex align-items-center">
@@ -62,7 +62,12 @@ const submit = () => {
                                 <a class="font-medium no-underline ml-2 text-right cursor-pointer"
                                     style="color: var(--primary-color)">Forgot password?</a>
                             </div>
-                            <Button type="submit" label="Sign In" class="w-full p-3 text-xl" :disabled="form.processing"></Button>
+                            <Button type="submit" label="Sign In" class="w-full p-3 text-xl"
+                                :disabled="form.processing"></Button>
+                            <Link :href="route('register')">
+                            <Button type="submit" label="New Member" class="w-full p-3 text-xl mt-3"
+                                :disabled="form.processing" outlined></Button>
+                            </Link>
                         </div>
                     </form>
                 </div>
@@ -81,4 +86,5 @@ const submit = () => {
 .pi-eye-slash {
     transform: scale(1.6);
     margin-right: 1rem;
-}</style>
+}
+</style>

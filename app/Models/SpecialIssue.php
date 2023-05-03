@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Sanctum\HasApiTokens;
 
 class SpecialIssue extends Model
@@ -28,8 +29,8 @@ class SpecialIssue extends Model
     /**
      * Get the tag that owns the SpecialIssue
      */
-    public function tag(): BelongsTo
+    public function tags(): BelongsToMany
     {
-        return $this->belongsTo(Tag::class);
+        return $this->belongsToMany(Tag::class, 'tag_ralations', 'entity_id', 'tag_id');
     }
 }

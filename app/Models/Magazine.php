@@ -26,4 +26,8 @@ class Magazine extends Model
     {
         return $this->belongsToMany(Book::class, 'magazine_books', 'magazine_id', 'book_id');
     }
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class, 'tag_ralations', 'entity_id', 'tag_id');
+    }
 }

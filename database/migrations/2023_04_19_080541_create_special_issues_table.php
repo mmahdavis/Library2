@@ -14,12 +14,9 @@ return new class extends Migration
         Schema::create('special_issues', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
-            $table->foreignId('tag_id')->nullable()->constrained('tags')->nullOnDelete();
             $table->string('name');
             $table->string('slug');
             $table->integer('price')->default(0);
-            $table->string('cover_type')->nullable();
-            $table->string('paper_type')->nullable();
             $table->string('publication_year')->nullable();
             $table->string('publication_month')->nullable();
             $table->integer('page')->nullable();
@@ -28,6 +25,7 @@ return new class extends Migration
             $table->integer('height')->nullable();
             $table->integer('weight')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

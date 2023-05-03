@@ -20,7 +20,6 @@ class SpecialIssueFactory extends Factory
     {
         return [
             'category_id' => Category::inRandomOrder()->first(),
-            'tag_id' => Tag::inRandomOrder()->first(),
             'name' => $this->faker->name(),
             'slug' => $this->faker->unique()->slug(1),
             'price' => $this->faker->randomNumber(6, true),

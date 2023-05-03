@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('entity_id');
             $table->integer('tag_id');
-            $table->enum('type', ['book','magazine','speciall-issue'])->default('book');
+            $table->enum('type', ['book','magazine','speciall_issue'])->default('book');
             $table->timestamps();
         });
     }

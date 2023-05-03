@@ -8,7 +8,7 @@ import AppConfig from '@/Layouts/AppConfig.vue';
             <img src="/demo/images/error/logo-error.svg" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0" />
             <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, rgba(233, 30, 99, 0.4) 10%, rgba(33, 150, 243, 0) 30%)">
                 <div class="w-full surface-card py-8 px-5 sm:px-8 flex flex-column align-items-center" style="border-radius: 53px">
-                    <div class="grid flex flex-column align-items-center">
+                    <div class="flex flex-column align-items-center">
                         <div class="flex justify-content-center align-items-center bg-pink-500 border-circle" style="height: 3.2rem; width: 3.2rem">
                             <i class="pi pi-fw pi-exclamation-circle text-2xl text-white"></i>
                         </div>

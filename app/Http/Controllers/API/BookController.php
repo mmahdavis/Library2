@@ -7,6 +7,8 @@ use App\Http\Resources\BookCollection;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 /**
  * @group Books management
@@ -29,7 +31,17 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'code' => 'required|unique:books|max:8',
+            'name' => 'required',
+            'price' => 'required',
+        ]);
+        if ($validatedData->fails()) {
+            return response()->json($validatedData->errors());
+        } else {
+            $newBook = Book::create($request->all());
+            return response()->json('book ' . $newBook->name . ' Created Successfuly', 200);
+        }
     }
 
     /**
@@ -46,7 +58,21 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'code' => [
+                'required',
+                'max:8',
+                Rule::unique('books')->ignore($book->code, 'code'),
+            ],
+            'name' => 'required',
+            'price' => 'required',
+        ]);
+        if ($validatedData->fails()) {
+            return response()->json($validatedData->errors());
+        } else {
+            $book->update($request->all());
+            return response()->json('book ' . $book->name . ' Updated Successfuly', 200);
+        }
     }
 
     /**
@@ -54,6 +80,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        return response()->json('book ' . $book->id . ' Deleted', 200);
     }
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug');
             $table->integer('price')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

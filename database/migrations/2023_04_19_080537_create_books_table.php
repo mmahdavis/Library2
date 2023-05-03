@@ -39,6 +39,7 @@ return new class extends Migration
             $table->integer('height')->nullable();
             $table->integer('weight')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

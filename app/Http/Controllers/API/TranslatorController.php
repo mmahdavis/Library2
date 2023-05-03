@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TranslatorCollection;
+use App\Http\Resources\TranslatorResource;
 use App\Models\Translator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * @group Translators management
@@ -19,7 +22,7 @@ class TranslatorController extends Controller
      */
     public function index()
     {
-        //
+        return new TranslatorCollection(Translator::all());
     }
 
     /**
@@ -27,7 +30,16 @@ class TranslatorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'slug' => 'required|unique:translators',
+            'name' => 'required',
+        ]);
+        if ($validatedData->fails()) {
+            return response()->json($validatedData->errors());
+        } else {
+            $newTranslator = Translator::create($request->all());
+            return response()->json('Translator ' . $newTranslator->name . ' Created Successfuly', 200);
+        }
     }
 
     /**
@@ -35,7 +47,7 @@ class TranslatorController extends Controller
      */
     public function show(Translator $translator)
     {
-        //
+        return new TranslatorResource($translator);
     }
 
     /**
@@ -43,7 +55,16 @@ class TranslatorController extends Controller
      */
     public function update(Request $request, Translator $translator)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'slug' => 'required|unique:translators,slug,' . $translator->slug . ',slug',
+            'name' => 'required',
+        ]);
+        if ($validatedData->fails()) {
+            return response()->json($validatedData->errors());
+        } else {
+            $translator->update($request->all());
+            return response()->json('Translator ' . $translator->name . ' Updated Successfuly', 200);
+        }
     }
 
     /**
@@ -51,6 +72,7 @@ class TranslatorController extends Controller
      */
     public function destroy(Translator $translator)
     {
-        //
+        $translator->delete();
+        return response()->json('Trnaslator ' . $translator->name . ' Deleted Successfuly.');
     }
 }
