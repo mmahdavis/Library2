@@ -329,5 +329,3 @@ const editWriter = (editWriter) => {
         </div>
     </app-layout>
 </template>
-
-<style scoped lang="scss">@import '../../css/demo/styles/badges.scss';</style>

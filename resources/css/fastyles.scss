@@ -1,15 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
 $gutter: 1rem; //for primeflex grid system
-.en {
-    direction: ltr;
-    text-align: left;
-    @import './layout/en/layout.scss';
-}
-.fa{
-    direction: rtl;
-    text-align: right;
-    @import './layout/fa/layout.scss';
-}
+@import './layout/fa/layout.scss';
+
 /* PrimeVue */
 @import 'primevue/resources/primevue.css';
 @import 'primeflex/primeflex.scss';

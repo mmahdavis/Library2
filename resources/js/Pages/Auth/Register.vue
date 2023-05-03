@@ -1,13 +1,10 @@
 <script setup>
-import { useLayout } from '@/Layouts/composables/layout';
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import AppConfig from '@/Layouts/AppConfig.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { useI18n } from "vue-i18n";
 
-const { layoutConfig } = useLayout();
-const email = ref('');
-const password = ref('');
-const checked = ref(false);
+const { locale } = useI18n();
 
 const logoUrl = computed(() => {
     return `/layout/images/logo.png`;
@@ -37,37 +34,38 @@ const submit = () => {
                 <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
                     <div class="text-center mb-5">
                         <img :src="logoUrl" alt="Image" height="50" class="mb-3" />
-                        <div class="text-900 text-3xl font-medium mb-3">Welcome</div>
-                        <span class="text-600 font-medium">Please Sign up to continue</span>
+                        <div class="text-900 text-3xl font-medium mb-3">{{ $t('Register.Header') }}</div>
+                        <span class="text-600 font-medium">{{ $t('Register.Message') }}</span>
                     </div>
 
                     <form @submit.prevent="submit">
                         <div>
-                            <label for="name" class="block text-900 text-xl font-medium mb-2">Name</label>
-                            <InputText id="name" type="text" placeholder="Name" class="w-full md:w-30rem mb-5"
-                                style="padding: 1rem" v-model="form.name" />
+                            <label for="name" class="block text-900 text-xl font-medium mb-2">{{ $t('Name') }}</label>
+                            <InputText id="name" type="text" :placeholder="$t('Placeholder.Name')"
+                                class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="form.name" />
 
-                            <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
-                            <InputText id="email" type="text" placeholder="Email address" class="w-full md:w-30rem mb-5"
+                            <label for="email" class="block text-900 text-xl font-medium mb-2">{{ $t('Email') }}</label>
+                            <InputText id="email" type="text" :placeholder="$t('Placeholder.Email')" class="w-full md:w-30rem mb-5"
                                 style="padding: 1rem" v-model="form.email" />
 
-                            <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
-                            <Password id="password" v-model="form.password" placeholder="Password" :toggleMask="true"
+                            <label for="password" class="block text-900 font-medium text-xl mb-2">{{ $t('Password')
+                            }}</label>
+                            <Password id="password" v-model="form.password" :placeholder="$t('Placeholder.Password')" :toggleMask="true"
                                 class="w-full mb-3" inputClass="w-full" inputStyle="padding:1rem">
                             </Password>
 
-                            <label for="password_confirmation" class="block text-900 font-medium text-xl mb-2">Confirm
-                                Password</label>
+                            <label for="password_confirmation" class="block text-900 font-medium text-xl mb-2">{{
+                                $t('ConfirmPassword') }}</label>
                             <Password id="password_confirmation" v-model="form.password_confirmation"
-                                placeholder="Confirm Password" class="w-full mb-3" inputClass="w-full"
+                                :placeholder="$t('Placeholder.ConfirmPassword')" class="w-full mb-3" inputClass="w-full"
                                 inputStyle="padding:1rem" :feedback="false">
                             </Password>
 
                             <div class="flex align-items-center justify-content-between mb-5 gap-5">
                                 <Link :href="route('login')" class="font-medium no-underline ml-2 text-right cursor-pointer"
-                                    style="color: var(--primary-color)">Already registered?</Link>
+                                    style="color: var(--primary-color)">{{ $t('AlreadyRegistered') }}</Link>
                             </div>
-                            <Button type="submit" label="Sign Up" class="w-full p-3 text-xl"
+                            <Button type="submit" :label="$t('SignUp')" class="w-full p-3 text-xl"
                                 :disabled="form.processing"></Button>
                         </div>
                     </form>
@@ -75,7 +73,6 @@ const submit = () => {
             </div>
         </div>
     </div>
-    <AppConfig simple />
 </template>
 
 <style scoped>

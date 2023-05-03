@@ -107,7 +107,6 @@ import CodeHighlight from '@/components/CodeHighlight.vue';
 import BlockViewer from '@/components/BlockViewer.vue';
 
 import '../css/styles.scss';
-import "primeflex/primeflex.css";
 
 import i18n from './locale.js'
 

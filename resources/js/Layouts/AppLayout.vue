@@ -30,6 +30,7 @@ const containerClass = computed(() => {
         'p-ripple-disabled': !layoutConfig.ripple.value
     };
 });
+
 const bindOutsideClickListener = () => {
     if (!outsideClickListener.value) {
         outsideClickListener.value = (event) => {
@@ -42,12 +43,14 @@ const bindOutsideClickListener = () => {
         document.addEventListener('click', outsideClickListener.value);
     }
 };
+
 const unbindOutsideClickListener = () => {
     if (outsideClickListener.value) {
         document.removeEventListener('click', outsideClickListener);
         outsideClickListener.value = null;
     }
 };
+
 const isOutsideClicked = (event) => {
     const sidebarEl = document.querySelector('.layout-sidebar');
     const topbarEl = document.querySelector('.layout-menu-button');
@@ -57,18 +60,20 @@ const isOutsideClicked = (event) => {
 </script>
 
 <template>
-    <div class="layout-wrapper" :class="containerClass">
-        <app-topbar></app-topbar>
-        <div class="layout-sidebar">
-            <app-sidebar></app-sidebar>
-        </div>
-        <div class="layout-main-container">
-            <div class="layout-main">
-                <slot />
+    <div :class="$i18n.locale == 'en' ? 'en' : 'fa'">
+        <div class="layout-wrapper" :class="containerClass">
+            <app-topbar></app-topbar>
+            <div class="layout-sidebar">
+                <app-sidebar></app-sidebar>
             </div>
-            <app-footer></app-footer>
+            <div class="layout-main-container">
+                <div class="layout-main">
+                    <slot />
+                </div>
+                <app-footer></app-footer>
+            </div>
+            <div class="layout-mask"></div>
         </div>
-        <div class="layout-mask"></div>
     </div>
 </template>
 
