@@ -1,10 +1,13 @@
 <script setup>
 import { FilterMatchMode } from 'primevue/api';
-import { ref, onMounted, onBeforeMount } from 'vue';
+import { ref, onMounted, onBeforeMount, watch } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useToast } from 'primevue/usetoast';
 import { Head, Link, router } from '@inertiajs/vue3';
 import axios from 'axios';
+import { useI18n } from "vue-i18n";
+
+const { locale } = useI18n();
 
 const props = defineProps({
     magazines: Object,
@@ -19,6 +22,8 @@ const dt = ref(null);
 const filters = ref({});
 const submitted = ref(false);
 const expandedRows = ref([]);
+const setDirection = ref(locale == 'en' ? 'direction:ltr' : 'direction:rtl');
+const getMargin = ref(locale == 'en' ? 'mr-' : 'ml-');
 
 onBeforeMount(() => {
     initFilters();
@@ -127,6 +132,16 @@ const expandAll = () => {
 const collapseAll = () => {
     expandedRows.value = null;
 };
+
+watch(locale, (val) => {
+    if (val == 'en') {
+        setDirection.value = 'direction:ltr';
+        getMargin.value = 'mr-';
+    } else {
+        setDirection.value = 'direction:rtl';
+        getMargin.value = 'ml-';
+    }
+})
 </script>
 
 <template>
@@ -137,7 +152,8 @@ const collapseAll = () => {
                 <div class="card">
                     <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
                         <li>
-                            <Link href="/dashboard" class="text-500 no-underline line-height-3 cursor-pointer">dashboard</Link>
+                            <Link href="/dashboard" class="text-500 no-underline line-height-3 cursor-pointer">dashboard
+                            </Link>
                         </li>
                         <li class="px-2">
                             <i class="pi pi-angle-right text-500 line-height-3"></i>
@@ -149,19 +165,21 @@ const collapseAll = () => {
                     <Toolbar class="mb-4">
                         <template v-slot:start>
                             <div class="my-2">
-                                <Button label="New" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" />
+                                <Button label="New" icon="pi pi-plus" class="p-button-success" @click="openNew" />
                             </div>
                         </template>
                     </Toolbar>
-                    <DataTable :value="magazines" v-model:expandedRows="expandedRows" dataKey="id"
-                        responsiveLayout="scroll" :paginator="true" :rows="10">
+                    <DataTable :value="magazines" v-model:expandedRows="expandedRows" dataKey="id" responsiveLayout="scroll"
+                        :paginator="true" :rows="10">
                         <template #header>
                             <div>
-                                <Button icon="pi pi-plus" label="Expand All" @click="expandAll" class="mr-2 mb-2" />
+                                <Button icon="pi pi-plus" label="Expand All" @click="expandAll"
+                                    :class="getMargin + '2 mb-2'" />
                                 <Button icon="pi pi-minus" label="Collapse All" @click="collapseAll" class="mb-2" />
                             </div>
                         </template>
-                        <Column :expander="true" headerStyle="min-width: 3rem" />
+                        <Column :expander="true" headerStyle="min-width: 3rem"
+                            :style="$i18n.locale == 'en' ? '' : 'rotate: 180deg;'" />
                         <Column field="name" header="Name" :sortable="true">
                             <template #body="slotProps">
                                 {{ slotProps.data.name }}
@@ -185,7 +203,8 @@ const collapseAll = () => {
                         </Column>
                         <Column headerStyle="min-width:10rem;">
                             <template #body="slotProps">
-                                <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"/>
+                                <Button icon="pi pi-pencil"
+                                    :class="'p-button-rounded p-button-success ' + getMargin + '2'" />
                                 <Button icon="pi pi-trash" class="p-button-rounded p-button-danger mt-2"
                                     @click="confirmDeleteMagazine(slotProps.data)" />
                             </template>
@@ -254,14 +273,16 @@ const collapseAll = () => {
                             <div class="field col">
                                 <label for="price">Price</label>
                                 <InputNumber id="price" v-model="magazine.price" mode="currency" currency="IRR"
-                                    locale="fa-IR" :class="{ 'p-invalid': submitted && !magazine.price }" :required="true" />
+                                    locale="fa-IR" :class="{ 'p-invalid': submitted && !magazine.price }"
+                                    :required="true" />
                                 <small class="p-invalid" v-if="submitted && !magazine.price">Price is required.</small>
                             </div>
                             <div class="field col">
                                 <label for="quantity">Quantity</label>
                                 <InputNumber id="quantity" v-model="magazine.quantity" integeronly
                                     :class="{ 'p-invalid': submitted && !magazine.quantity }" />
-                                <small class="p-invalid" v-if="submitted && !magazine.quantity">Quantity is required.</small>
+                                <small class="p-invalid" v-if="submitted && !magazine.quantity">Quantity is
+                                    required.</small>
                             </div>
                         </div>
 
@@ -278,8 +299,8 @@ const collapseAll = () => {
 
                         <div class="field">
                             <label class="mb-3">Tags</label>
-                            <MultiSelect v-model="magazine.tags" :options="tags" optionLabel="name" placeholder="Select Tags"
-                                :filter="true">
+                            <MultiSelect v-model="magazine.tags" :options="tags" optionLabel="name"
+                                placeholder="Select Tags" :filter="true">
                                 <template #value="slotProps">
                                     <div class="inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2"
                                         v-for=" option  of  slotProps.value " :key="option.id">
@@ -325,7 +346,8 @@ const collapseAll = () => {
                         <template #footer>
                             <Button label="No" icon="pi pi-times" class="p-button-text"
                                 @click="deleteMagazineDialog = false" />
-                            <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteMagazine(magazine)" />
+                            <Button label="Yes" icon="pi pi-check" class="p-button-text"
+                                @click="deleteMagazine(magazine)" />
                         </template>
                     </Dialog>
                 </div>

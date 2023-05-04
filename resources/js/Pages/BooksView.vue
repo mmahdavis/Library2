@@ -1,13 +1,13 @@
 <script setup>
 import { FilterMatchMode } from 'primevue/api';
-import { ref, onMounted, onBeforeMount } from 'vue';
+import { ref, onMounted, onBeforeMount, watch } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useToast } from 'primevue/usetoast';
 import { Head, Link, router } from '@inertiajs/vue3';
 import axios from 'axios';
 import { useI18n } from "vue-i18n";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const props = defineProps({
     books: Object,
@@ -31,6 +31,8 @@ const statuses = ref([
     { label: 'LOWSTOCK', value: 'lowstock' },
     { label: 'OUTOFSTOCK', value: 'outofstock' }
 ]);
+const setDirection = ref(locale == 'en' ? 'direction:ltr' : 'direction:rtl');
+const getMargin = ref(locale == 'en' ? 'mr-' : 'ml-');
 
 onBeforeMount(() => {
     initFilters();
@@ -154,6 +156,16 @@ const editBook = (editBook) => {
     book.value = { ...editBook };
     bookDialog.value = true;
 };
+
+watch(locale, (val) => {
+    if (val == 'en') {
+        setDirection.value = 'direction:ltr';
+        getMargin.value = 'mr-';
+    } else {
+        setDirection.value = 'direction:rtl';
+        getMargin.value = 'ml-';
+    }
+})
 </script>
 
 <template>
@@ -178,7 +190,7 @@ const editBook = (editBook) => {
                     <Toolbar class="mb-4">
                         <template v-slot:start>
                             <div class="my-2">
-                                <Button :label="$t('New')" icon="pi pi-plus" class="p-button-success mr-2"
+                                <Button :label="$t('New')" icon="pi pi-plus" :class="'p-button-success ' + getMargin + '2'"
                                     @click="openNew" />
                                 <Button :label="$t('Delete')" icon="pi pi-trash" class="p-button-danger"
                                     @click="confirmDeleteSelected" :disabled="!selectedBooks || !selectedBooks.length" />
@@ -186,8 +198,6 @@ const editBook = (editBook) => {
                         </template>
 
                         <template v-slot:end>
-                            <!-- <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import"
-                                chooseLabel="Import" class="mr-2 inline-block" /> -->
                             <Button :label="$t('Export')" icon="pi pi-upload" class="p-button-help"
                                 @click="exportCSV($event)" />
                         </template>
@@ -263,7 +273,7 @@ const editBook = (editBook) => {
                         </Column>
                         <Column headerStyle="min-width:10rem;">
                             <template #body="slotProps">
-                                <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                                <Button icon="pi pi-pencil" :class="'p-button-rounded p-button-success ' + getMargin + '2'"
                                     @click="editBook(slotProps.data)" />
                                 <Button icon="pi pi-trash" class="p-button-rounded p-button-danger mt-2"
                                     @click="confirmDeleteBook(slotProps.data)" />
@@ -314,7 +324,7 @@ const editBook = (editBook) => {
                         <div class="field">
                             <label class="mb-3">{{ $t('Category') }}</label>
                             <div class="formgrid grid">
-                                <div class="field-radiobutton col-6" v-for=" category  in   categories  ">
+                                <div class="field-radiobutton col-6" v-for="  category   in    categories   ">
                                     <RadioButton id="category1" name="category" :value="category.id"
                                         v-model="book.category" />
                                     <label for="category1">{{ category.name }}</label>
@@ -327,8 +337,8 @@ const editBook = (editBook) => {
                             <MultiSelect v-model="book.tags" :options="tags" optionLabel="name"
                                 :placeholder="$t('Select.Tags')" :filter="true">
                                 <template #value="slotProps">
-                                    <div class="inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2"
-                                        v-for="  option   of   slotProps.value  " :key="option.id">
+                                    <div :class="'inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round ' + setMargin + '2'"
+                                        v-for="   option    of    slotProps.value   " :key="option.id">
                                         <div>{{ option.name }}</div>
                                     </div>
                                     <template v-if="!slotProps.value || slotProps.value.length === 0">
@@ -365,11 +375,12 @@ const editBook = (editBook) => {
                     <Dialog v-model:visible="deleteBookDialog" :style="{ width: '450px' }"
                         :header="$t('Confirm') + ' ' + $t('Delete')" :modal="true">
                         <div class="flex align-items-center justify-content-center">
-                            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                            <i :class="'pi pi-exclamation-triangle' + setMargin + '+3'" style="font-size: 2rem" />
                             <span v-if="book">{{ $t('Messages.Confirm.Delete', { name: book.name }) }}</span>
                         </div>
                         <template #footer>
-                            <Button :label="$t('No')" icon="pi pi-times" class="p-button-text" @click="deleteBookDialog = false" />
+                            <Button :label="$t('No')" icon="pi pi-times" class="p-button-text"
+                                @click="deleteBookDialog = false" />
                             <Button :label="$t('Yes')" icon="pi pi-check" class="p-button-text" @click="deleteBook(book)" />
                         </template>
                     </Dialog>
@@ -377,13 +388,14 @@ const editBook = (editBook) => {
                     <Dialog v-model:visible="deleteBooksDialog" :style="{ width: '450px' }"
                         :header="$t('Confirm') + ' ' + $t('Delete')" :modal="true">
                         <div class="flex align-items-center justify-content-center">
-                            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                            <i :class="'pi pi-exclamation-triangle' + setMargin + '+3'" style="font-size: 2rem" />
                             <span v-if="book">{{ $t('Messages.Confirm.DeleteBooks') }}</span>
                         </div>
                         <template #footer>
                             <Button :label="$t('No')" icon="pi pi-times" class="p-button-text"
                                 @click="deleteBooksDialog = false" />
-                            <Button :label="$t('Yes')" icon="pi pi-check" class="p-button-text" @click="deleteSelectedBooks" />
+                            <Button :label="$t('Yes')" icon="pi pi-check" class="p-button-text"
+                                @click="deleteSelectedBooks" />
                         </template>
                     </Dialog>
                 </div>
