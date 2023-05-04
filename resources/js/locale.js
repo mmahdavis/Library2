@@ -129,6 +129,7 @@ const i18n = createI18n({
             No: 'No',
             Cancel: 'Cancel',
             Save: 'Save',
+            For: 'for',
         },
         fa: {
             appTopBar: {
@@ -254,6 +255,7 @@ const i18n = createI18n({
             No: 'خیر',
             Cancel: 'انصراف',
             Save: 'ذخیره',
+            For: 'برای',
         }
     },
 })

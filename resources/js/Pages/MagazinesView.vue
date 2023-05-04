@@ -156,7 +156,8 @@ watch(locale, (val) => {
                             </Link>
                         </li>
                         <li class="px-2">
-                            <i class="pi pi-angle-right text-500 line-height-3"></i>
+                            <i class="pi pi-angle-right text-500 line-height-3"
+                                :style="$i18n.locale == 'en' ? '' : 'rotate:180deg;'"></i>
                         </li>
                         <li>
                             <span class="text-900 line-height-3">Magazines</span>
@@ -212,7 +213,8 @@ watch(locale, (val) => {
 
                         <template #expansion="slotProps">
                             <div class="p-3">
-                                <h5>Magazines for {{ slotProps.data.name }}</h5>
+                                <h5 :class="$i18n.locale == 'en' ? 'text-left' : 'text-right'">{{ $t('Magazines') }} {{
+                                    $t('For') }} {{ slotProps.data.name }}</h5>
                                 <DataTable :value="slotProps.data.books" responsiveLayout="scroll">
                                     <Column field="id" header="Id" :sortable="true">
                                         <template #body="slotProps">

@@ -151,7 +151,8 @@ const editPublisher = (editPublisher) => {
                             <Link href="/dashboard" class="text-500 no-underline line-height-3 cursor-pointer">dashboard</Link>
                         </li>
                         <li class="px-2">
-                            <i class="pi pi-angle-right text-500 line-height-3"></i>
+                            <i class="pi pi-angle-right text-500 line-height-3"
+                                :style="$i18n.locale == 'en' ? '' : 'rotate:180deg;'"></i>
                         </li>
                         <li>
                             <span class="text-900 line-height-3">Publishers</span>
