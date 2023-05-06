@@ -5,8 +5,8 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 import { useI18n } from "vue-i18n";
 
 const { locale } = useI18n();
-const getDirection = ref(locale == 'en' ? 'direction:ltr' : 'direction:rtl');
-const getMargin = ref(locale == 'en' ? 'mr-2' : 'ml-2');
+const getDirection = ref(locale.value == 'en' || localStorage.getItem('language') == 'en'? 'direction:ltr': 'direction:rtl');
+const getMargin = ref(locale.value == 'en' || localStorage.getItem('language') == 'en'? 'mr-2': 'ml-2');
 
 const logoUrl = computed(() => {
     return `/layout/images/logo.png`;

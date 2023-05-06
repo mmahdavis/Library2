@@ -22,8 +22,8 @@ const dt = ref(null);
 const filters = ref({});
 const submitted = ref(false);
 const expandedRows = ref([]);
-const setDirection = ref(locale == 'en' ? 'direction:ltr' : 'direction:rtl');
-const getMargin = ref(locale == 'en' ? 'mr-' : 'ml-');
+const setDirection = ref(locale.value == 'en' ? 'direction:ltr' : 'direction:rtl');
+const getMargin = ref(locale.value == 'en' ? 'mr-' : 'ml-');
 
 onBeforeMount(() => {
     initFilters();
@@ -213,7 +213,7 @@ watch(locale, (val) => {
 
                         <template #expansion="slotProps">
                             <div class="p-3">
-                                <h5 :class="$i18n.locale == 'en' ? 'text-left' : 'text-right'">{{ $t('Magazines') }} {{
+                                <h5 :class="$i18n.locale == 'en' ? 'text-left' : 'text-right'">{{ $t('Books') }} {{
                                     $t('For') }} {{ slotProps.data.name }}</h5>
                                 <DataTable :value="slotProps.data.books" responsiveLayout="scroll">
                                     <Column field="id" header="Id" :sortable="true">

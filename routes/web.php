@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AudiosController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\MagazineController;
 use App\Http\Controllers\PublisherController;
@@ -41,9 +42,25 @@ Route::middleware([
         return Inertia::render('HomeView');
     })->name('dashboard');
 
+    Route::get('dashboard/profile', function () {
+        return Inertia::render('ProfileView');
+    })->name('profile');
+
+    Route::get('dashboard/notification', function () {
+        return Inertia::render('NotificationView');
+    })->name('notification');
+
+    Route::prefix('dashboard')->controller(DashboardController::class)->group(function () {
+        Route::get('', 'home')->name('dashboard.home');
+        Route::get('profile', 'profile')->name('dashboard.profile');
+        Route::get('notification', 'notification')->name('dashboard.notification');
+    });
+
     Route::prefix('dashboard/books')->controller(BookController::class)->group(function () {
         // Get all Books
         Route::get('', 'index')->name('books.index');
+        // Create Book Page
+        Route::get('/create', 'create')->name('books.create');
         // Get a single Book
         Route::get('/{id}', 'show')->name('books.show');
         // Create a new Book

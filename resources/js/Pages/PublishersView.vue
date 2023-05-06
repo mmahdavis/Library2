@@ -185,7 +185,7 @@ const editPublisher = (editPublisher) => {
                             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                                 <h5 class="m-0">Manage Publishers</h5>
                                 <span class="block mt-2 md:mt-0 p-input-icon-left">
-                                    <i class="pi pi-search" />
+                                    <i class="pi pi-search mx-2" />
                                     <InputText v-model="filters['global'].value" placeholder="Search..." />
                                 </span>
                             </div>

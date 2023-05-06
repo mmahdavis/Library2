@@ -12,6 +12,8 @@ use App\Models\Writer;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+use function Termwind\render;
+
 class BookController extends Controller
 {
     /**
@@ -36,6 +38,14 @@ class BookController extends Controller
             'publishers' => Publisher::all('id', 'name'),
             'translators' => Translator::all('id', 'name'),
         ]);
+    }
+
+    /**
+     * Create a new field of the book.
+     */
+    public function create()
+    {
+        return Inertia::render('BookCreateView');
     }
 
     /**

@@ -76,6 +76,7 @@ const i18n = createI18n({
                 Password: 'Enter Your Password',
                 ConfirmPassword: 'Confirm Password',
             },
+
             AlreadyRegistered: 'Already Registered?',
             Email: 'Email',
             Password: 'Password',
@@ -84,6 +85,7 @@ const i18n = createI18n({
             ForgotPassword: 'Forgot Password?',
             SignIn: 'Sign In',
             SignUp: 'Sign Un',
+            SignOut: 'Sign Out',
             NewMember: 'New Member',
             Dashboard: 'Dashboard',
             Books: 'Books',
@@ -210,6 +212,7 @@ const i18n = createI18n({
             ForgotPassword: 'فراموشی رمز عبور',
             SignIn: 'ورود',
             SignUp: 'ثبت نام',
+            SignOut: 'خروج',
             NewMember: 'کاربر جدید',
             Dashboard: 'داشبورد',
             Books: 'کتاب ها',

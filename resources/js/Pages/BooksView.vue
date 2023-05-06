@@ -31,9 +31,8 @@ const statuses = ref([
     { label: 'LOWSTOCK', value: 'lowstock' },
     { label: 'OUTOFSTOCK', value: 'outofstock' }
 ]);
-const getDirection = ref(locale == 'en' ? 'direction:ltr' : 'direction:rtl');
-const getMargin = ref(locale == 'en' ? 'mr-' : 'ml-');
-
+const getDirection = ref(locale.value == 'en' ? 'direction:ltr' : 'direction:rtl');
+const getMargin = ref(locale.value == 'en' ? 'mr-' : 'ml-');
 onBeforeMount(() => {
     initFilters();
 });
@@ -191,8 +190,10 @@ watch(locale, (val) => {
                     <Toolbar class="mb-4">
                         <template v-slot:start>
                             <div class="my-2">
-                                <Button :label="$t('New')" icon="pi pi-plus" :class="'p-button-success ' + getMargin + '2'"
-                                    @click="openNew" />
+                                <Link :href="route('books.create')">
+                                    <Button :label="$t('New')" icon="pi pi-plus"
+                                        :class="'p-button-success ' + getMargin + '2'" />
+                                </Link>
                                 <Button :label="$t('Delete')" icon="pi pi-trash" class="p-button-danger"
                                     @click="confirmDeleteSelected" :disabled="!selectedBooks || !selectedBooks.length" />
                             </div>
@@ -214,7 +215,7 @@ watch(locale, (val) => {
                             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                                 <h5 class="m-0">{{ $t('Manage') }} {{ $t('Books') }}</h5>
                                 <span class="block mt-2 md:mt-0 p-input-icon-left">
-                                    <i class="pi pi-search" />
+                                    <i class="pi pi-search mx-2" />
                                     <InputText v-model="filters['global'].value" :placeholder="$t('Search') + '...'" />
                                 </span>
                             </div>
@@ -379,9 +380,11 @@ watch(locale, (val) => {
                     <Dialog v-model:visible="deleteBookDialog" :style="{ width: '450px' }"
                         :header="$t('Confirm') + ' ' + $t('Delete')" :modal="true">
                         <div class="flex align-items-center justify-content-center">
-                            <i v-if="$i18n.locale == 'en'" class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                            <i v-if="$i18n.locale == 'en'" class="pi pi-exclamation-triangle mr-3"
+                                style="font-size: 2rem" />
                             <span v-if="book">{{ $t('Messages.Confirm.Delete', { name: book.name }) }}</span>
-                            <i v-if="$i18n.locale == 'fa'" class="pi pi-exclamation-triangle ml-3" style="font-size: 2rem" />
+                            <i v-if="$i18n.locale == 'fa'" class="pi pi-exclamation-triangle ml-3"
+                                style="font-size: 2rem" />
                         </div>
                         <template #footer>
                             <Button :label="$t('No')" icon="pi pi-times" class="p-button-text"
@@ -393,9 +396,11 @@ watch(locale, (val) => {
                     <Dialog v-model:visible="deleteBooksDialog" style="width: 450px;"
                         :header="$t('Confirm') + ' ' + $t('Delete')" :modal="true">
                         <div class="flex align-items-center justify-content-center">
-                            <i v-if="$i18n.locale == 'en'" class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                            <i v-if="$i18n.locale == 'en'" class="pi pi-exclamation-triangle mr-3"
+                                style="font-size: 2rem" />
                             <span v-if="book">{{ $t('Messages.Confirm.DeleteBooks') }}</span>
-                            <i v-if="$i18n.locale == 'fa'" class="pi pi-exclamation-triangle ml-3" style="font-size: 2rem" />
+                            <i v-if="$i18n.locale == 'fa'" class="pi pi-exclamation-triangle ml-3"
+                                style="font-size: 2rem" />
                         </div>
                         <template #footer>
                             <Button :label="$t('No')" icon="pi pi-times" class="p-button-text"
@@ -406,6 +411,5 @@ watch(locale, (val) => {
                     </Dialog>
                 </div>
             </div>
-        </div>
-    </app-layout>
-</template>
+    </div>
+</app-layout></template>

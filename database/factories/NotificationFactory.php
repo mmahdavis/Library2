@@ -20,7 +20,7 @@ class NotificationFactory extends Factory
 
         return [
             'user_id' => User::inRandomOrder()->first(),
-            'type' => $this->faker->randomElement(['danger', 'info', 'success', 'warning']),
+            'type' => $this->faker->randomElement(['error', 'info', 'success', 'warn']),
             'title' => $this->faker->sentence(2, true),
             'message' => $this->faker->paragraph(),
         ];

@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users');
             $table->string('title', 100);
             $table->text('message');
-            $table->enum('type', ['success', 'danger', 'info', 'warning'])->default('info');
+            $table->enum('type', ['success', 'error', 'info', 'warn'])->default('info');
             $table->boolean('checked')->default(false);
             $table->timestamps();
             $table->softDeletes();
